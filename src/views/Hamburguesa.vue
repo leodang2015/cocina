@@ -44,8 +44,6 @@
           </div>
         </q-card>
       </div>
-
-      <!-- Menú General de Hamburguesas -->
       <div class="text-center q-mb-lg q-pt-md">
         <h2 class="text-h5 text-weight-bold text-amber-2 playfair-font q-my-none">NUESTRA SELECCIÓN ARTESANAL</h2>
         <div class="gold-line q-mx-auto q-mt-xs"></div>
@@ -69,7 +67,6 @@
 
             <q-card-actions class="full-width row items-center justify-between q-px-md q-pb-md q-pt-lg">
               <span class="text-h6 text-weight-bold text-amber-4">{{ producto.precio }}</span>
-              <q-btn flat round color="amber-5" icon="add_shopping_cart" />
             </q-card-actions>
           </q-card>
         </div>
