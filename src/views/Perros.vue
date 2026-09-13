@@ -1,6 +1,5 @@
 <template>
   <q-page class="bg-grey-10 text-grey-2 q-pb-xl">
-    <!-- Header Banner -->
     <div class="banner-container relative-position">
       <q-img src="https://images.unsplash.com/photo-1619740455993-9e612b1af08a?q=80&w=1200&auto=format&fit=crop" height="260px" fit="cover">
         <div class="absolute-full flex flex-center bg-overlay">
@@ -14,10 +13,7 @@
         </div>
       </q-img>
     </div>
-
     <div class="container q-mx-auto q-px-md q-mt-xl" style="max-width: 1100px;">
-      
-      <!-- Plato de Firma (Chef Signature) -->
       <div class="q-mb-xl">
         <div class="text-center q-mb-lg">
           <q-icon name="restaurant" color="amber-5" size="28px" />
@@ -45,14 +41,10 @@
           </div>
         </q-card>
       </div>
-
-      <!-- Menú Degustación -->
       <div class="text-center q-mb-lg q-pt-md">
         <h2 class="text-h5 text-weight-bold text-amber-2 playfair-font q-my-none">NUESTRA CARTA DE AUTOR</h2>
         <div class="gold-line q-mx-auto q-mt-xs"></div>
       </div>
-
-      <!-- Grid simétrico con altura uniforme para todas las imágenes -->
       <div class="row q-col-gutter-lg items-stretch">
         <div v-for="(producto, index) in dogs" :key="index" class="col-12 col-sm-6 col-md-4 flex">
           <q-card class="card-gourmet bg-grey-9 text-grey-2 full-height full-width border-grey border-radius-md overflow-hidden flex column justify-between">
@@ -78,11 +70,8 @@
                 <div class="text-body2 text-grey-4 font-light">{{ producto.descripcion }}</div>
               </q-card-section>
             </div>
-
-            <!-- Contenedor inferior: Botón y precio fijos en el fondo -->
             <q-card-actions class="row items-center justify-between q-px-md q-pb-md q-pt-lg">
               <span class="text-h6 text-weight-bold text-amber-4">{{ producto.precio }}</span>
-              <q-btn flat round color="amber-5" icon="add_shopping_cart" />
             </q-card-actions>
           </q-card>
         </div>
@@ -186,14 +175,10 @@ const dogs = [
   border-color: #d4af37;
   box-shadow: 0 12px 24px rgba(212, 175, 55, 0.2);
 }
-
-/* REGLAS CLAVE PARA IGUALAR Y RECORTAR IMÁGENES AUTOMÁTICAMENTE */
 .product-img {
   height: 220px !important;
   max-height: 220px !important;
 }
-
-/* Fuerza el recorte uniforme dentro del componente q-img de Quasar */
 :deep(.product-img .q-img__image) {
   background-size: cover !important;
   background-position: center center !important;
