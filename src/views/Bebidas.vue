@@ -1,6 +1,5 @@
 <template>
   <q-page class="bg-grey-10 text-grey-2 q-pb-xl">
-    <!-- Hero Banner Gourmet -->
     <div class="banner-container relative-position">
       <q-img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?q=80&w=1200&auto=format&fit=crop" height="260px" fit="cover">
         <div class="absolute-full flex flex-center bg-overlay">
@@ -14,7 +13,6 @@
     </div>
 
     <div class="container q-mx-auto q-px-md q-mt-xl" style="max-width: 1100px;">
-      <!-- Plato de Firma (Chef Signature) -->
       <div class="q-mb-xl">
         <div class="text-center q-mb-lg">
           <q-icon name="local_bar" color="amber-5" size="28px" />
@@ -41,8 +39,6 @@
           </div>
         </q-card>
       </div>
-
-      <!-- Menú General -->
       <div class="text-center q-mb-lg q-pt-md">
         <h2 class="text-h5 text-weight-bold text-amber-2 playfair-font q-my-none">CARTA DE BEBIDAS Y REFRESHERS</h2>
         <div class="gold-line q-mx-auto q-mt-xs"></div>
@@ -66,7 +62,6 @@
 
             <q-card-actions class="full-width row items-center justify-between q-px-md q-pb-md q-pt-lg">
               <span class="text-h6 text-weight-bold text-amber-4">{{ producto.precio }}</span>
-              <q-btn flat round color="amber-5" icon="add_shopping_cart" />
             </q-card-actions>
           </q-card>
         </div>
