@@ -1,6 +1,5 @@
 <template>
   <q-page class="bg-grey-10 text-grey-2 q-pb-xl">
-    <!-- Hero Banner Gourmet -->
     <div class="banner-container relative-position">
       <q-img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?q=80&w=1200&auto=format&fit=crop" height="260px" fit="cover">
         <div class="absolute-full flex flex-center bg-overlay">
@@ -14,7 +13,6 @@
     </div>
 
     <div class="container q-mx-auto q-px-md q-mt-xl" style="max-width: 1100px;">
-      <!-- Plato de Firma (Chef Signature) -->
       <div class="q-mb-xl">
         <div class="text-center q-mb-lg">
           <q-icon name="cake" color="amber-5" size="28px" />
@@ -41,13 +39,10 @@
           </div>
         </q-card>
       </div>
-
-      <!-- Menú General -->
       <div class="text-center q-mb-lg q-pt-md">
         <h2 class="text-h5 text-weight-bold text-amber-2 playfair-font q-my-none">NUESTRA CARTA DE REPOSTERÍA</h2>
         <div class="gold-line q-mx-auto q-mt-xs"></div>
       </div>
-
       <div class="row q-col-gutter-lg">
         <div v-for="(producto, index) in postres" :key="index" class="col-12 col-sm-6 col-md-4">
           <q-card class="card-gourmet bg-grey-9 text-grey-2 full-height flex flex-center column justify-between border-grey border-radius-md">
@@ -58,15 +53,12 @@
                 </q-chip>
               </div>
             </q-img>
-
             <q-card-section class="full-width q-pb-none">
               <div class="text-h6 text-weight-bold text-amber-1 playfair-font q-mb-xs">{{ producto.nombre }}</div>
               <div class="text-body2 text-grey-4 font-light">{{ producto.descripcion }}</div>
             </q-card-section>
-
             <q-card-actions class="full-width row items-center justify-between q-px-md q-pb-md q-pt-lg">
               <span class="text-h6 text-weight-bolder text-amber-4">{{ producto.precio }}</span>
-              <q-btn flat round color="amber-5" icon="add_shopping_cart" />
             </q-card-actions>
           </q-card>
         </div>
