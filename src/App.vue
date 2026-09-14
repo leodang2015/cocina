@@ -1,7 +1,5 @@
 <template>
   <q-layout view="lHh Lpr lFf" class="bg-grey-10 text-grey-2">
-    
-    <!-- BARRA SUPERIOR DE NAVEGACIÓN -->
     <q-header class="bg-grey-10 text-grey-2 border-bottom-gold" elevated>
       <q-toolbar class="container q-mx-auto" style="max-width: 1200px;">
         <q-toolbar-title class="flex items-center cursor-pointer" @click="$router.push('/')">
@@ -10,8 +8,6 @@
             HAUTE CUISINE
           </span>
         </q-toolbar-title>
-
-        <!-- Navegación Escritorio -->
         <div class="gt-sm row items-center q-gutter-sm">
           <q-btn flat no-caps label="Inicio" to="/" class="nav-link text-bold" active-class="nav-active" />
           <q-btn flat no-caps label="Hamburguesas" to="/hamburguesas" class="nav-link text-bold" active-class="nav-active" />
@@ -20,16 +16,10 @@
           <q-btn flat no-caps label="Bebidas" to="/bebidas" class="nav-link text-bold" active-class="nav-active" />
           <q-btn flat no-caps label="Postres" to="/postres" class="nav-link text-bold" active-class="nav-active" />
           <q-btn flat no-caps label="Nosotros" to="/nosotros" class="nav-link text-bold" active-class="nav-active" />
-          
-          <q-btn outline color="amber-5" icon="book" label="Carta Digital" class="q-ml-sm border-radius-md" />
         </div>
-
-        <!-- Botón Menú Móvil -->
         <q-btn flat round icon="menu" color="amber-5" class="lt-md" @click="drawer = !drawer" />
       </q-toolbar>
     </q-header>
-
-    <!-- MENÚ DESPLEGABLE MÓVIL -->
     <q-drawer v-model="drawer" side="right" class="bg-grey-9 text-grey-2 border-gold-left" behavior="mobile">
       <q-scroll-area class="fit q-pa-md">
         <div class="text-center q-mb-lg q-pt-md">
@@ -37,7 +27,6 @@
           <div class="playfair-font text-h6 text-amber-2 text-weight-bold q-mt-xs">HAUTE CUISINE</div>
           <div class="gold-line q-mx-auto q-mt-xs"></div>
         </div>
-
         <q-list class="text-grey-3">
           <q-item clickable v-ripple to="/" active-class="text-amber-4 text-bold">
             <q-item-section avatar><q-icon name="home" color="amber-5" /></q-item-section>
@@ -70,12 +59,8 @@
         </q-list>
       </q-scroll-area>
     </q-drawer>
-
-    <!-- SECCIÓN BIENVENIDA ESTILO FOLLETO (Sólo visible en el inicio) -->
     <q-page-container>
       <div v-if="$route.path === '/'" class="folleto-welcome q-pb-xl">
-        
-        <!-- Hero Portada del Folleto -->
         <div class="folleto-hero relative-position flex flex-center">
           <q-img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop" height="420px" fit="cover">
             <div class="absolute-full bg-overlay flex flex-center">
@@ -93,8 +78,6 @@
             </div>
           </q-img>
         </div>
-
-        <!-- Tríptico del Folleto / Secciones Destacadas -->
         <div class="container q-mx-auto q-px-md q-mt-xl" style="max-width: 1100px;">
           <div class="text-center q-mb-xl">
             <span class="text-caption text-amber-5 text-bold letter-spacing-2 text-uppercase">Carta de Presentación</span>
@@ -103,7 +86,6 @@
           </div>
 
           <div class="row q-col-gutter-lg">
-            <!-- Columna 1 del Folleto -->
             <div class="col-12 col-md-4">
               <q-card class="bg-grey-9 text-grey-2 border-gold full-height text-center q-pa-md card-folleto">
                 <q-card-section>
@@ -120,8 +102,6 @@
                 </q-card-actions>
               </q-card>
             </div>
-
-            <!-- Columna 2 del Folleto -->
             <div class="col-12 col-md-4">
               <q-card class="bg-grey-9 text-grey-2 border-gold full-height text-center q-pa-md card-folleto">
                 <q-card-section>
@@ -138,8 +118,6 @@
                 </q-card-actions>
               </q-card>
             </div>
-
-            <!-- Columna 3 del Folleto -->
             <div class="col-12 col-md-4">
               <q-card class="bg-grey-9 text-grey-2 border-gold full-height text-center q-pa-md card-folleto">
                 <q-card-section>
@@ -159,12 +137,8 @@
           </div>
         </div>
       </div>
-
-      <!-- VISTA DE LAS RUTAS HIJAS -->
       <router-view />
     </q-page-container>
-
-    <!-- FOOTER ESTILO FOLLETO EDITORIAL -->
     <q-footer class="bg-grey-10 text-grey-5 border-top-grey q-py-lg">
       <div class="container q-mx-auto text-center q-px-md" style="max-width: 1100px;">
         <div class="row q-col-gutter-md items-center justify-between">
@@ -205,7 +179,6 @@ body {
   font-family: 'Roboto', sans-serif;
   background-color: #121212;
 }
-/* Fuerza que todas las imágenes dentro de tarjetas tengan el mismo alto y recorte proporcional */
 .card-gourmet .q-img,
 .card-folleto .q-img {
   height: 280px !important;
@@ -213,14 +186,12 @@ body {
   width: 100% !important;
 }
 
-/* Centra el encuadre de la foto */
 .card-gourmet .q-img__image,
 .card-folleto .q-img__image {
   background-size: cover !important;
   background-position: center center !important;
 }
 
-/* Alinea la altura de las tarjetas del grid */
 .items-stretch {
   display: flex;
   align-items: stretch;}
