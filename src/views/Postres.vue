@@ -174,7 +174,7 @@ const destacado = {
   nombre: "Volcán de Chocolate Belga",
   descripcion: "Bizcocho tibio de chocolate 70% cacao con centro líquido cremoso, acompañado de una bola de helado artesanal de vainilla Bourbon.",
   precio: "$18.000",
-  imagen: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=600&auto=format&fit=crop",
+  imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTS5NNl7_0aKp7GoWdOI5RSh0vzDSMNVeMYTYDJ99XdHg&s=10",
   ingredientes: ["Chocolate Belga 70%", "Helado Vainilla Bourbon", "Cacao en polvo"]
 }
 
