@@ -1,14 +1,14 @@
 <template>
   <q-page class="bg-grey-10 text-grey-2 q-pb-xl">
     <div class="banner-container relative-position">
-      <q-img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1000&auto=format&fit=crop"
+      <q-img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?q=80&w=1000&auto=format&fit=crop"
         height="260px" fit="cover">
         <div class="absolute-full flex flex-center bg-overlay">
           <div class="text-center text-amber-2 q-px-md">
-            <div class="text-overline letter-spacing-2 text-amber-5 text-bold">Sabor para Compartir</div>
-            <h1 class="text-h3 text-weight-bolder q-my-xs playfair-font">Combo Promociones</h1>
+            <div class="text-overline letter-spacing-2 text-amber-5 text-bold">Repostería de Autor</div>
+            <h1 class="text-h3 text-weight-bolder q-my-xs playfair-font">Postres Artesanales</h1>
             <p class="text-subtitle1 text-grey-4 font-italic" style="max-width: 600px; margin: 0 auto;">
-              Aprovecha nuestras super ofertas pensadas para compartir.
+              El toque dulce perfecto para culminar tu experiencia gastronómica.
             </p>
           </div>
         </div>
@@ -18,27 +18,28 @@
     <div class="container q-mx-auto q-px-md q-mt-xl" style="max-width: 1100px;">
       <div class="q-mb-xl">
         <div class="text-center q-mb-lg">
-          <q-icon name="local_offer" color="amber-5" size="28px" />
-          <div class="text-caption text-uppercase letter-spacing-2 text-amber-5 text-bold">Super Oferta</div>
-          <h2 class="text-h4 text-weight-bold text-amber-1 q-my-none playfair-font">Combo Destacado</h2>
+          <q-icon name="cake" color="amber-5" size="28px" />
+          <div class="text-caption text-uppercase letter-spacing-2 text-amber-5 text-bold">Recomendado del Pastelero
+          </div>
+          <h2 class="text-h4 text-weight-bold text-amber-1 q-my-none playfair-font">Postre Insignia</h2>
           <div class="gold-line q-mx-auto q-mt-xs"></div>
         </div>
 
         <q-card class="bg-grey-9 text-grey-2 shadow-24 border-gold border-radius-lg overflow-hidden">
           <div class="row items-center border-responsive">
-            <q-img :src="chefPromo.imagen" class="col-12 col-md-6 chef-img" height="320px" fit="cover" />
+            <q-img :src="destacado.imagen" class="col-12 col-md-6 chef-img" height="320px" fit="cover" />
             <q-card-section class="col-12 col-md-6 q-pa-lg">
-              <div class="text-overline text-amber-5 text-bold">Edición Especial</div>
-              <div class="text-h4 text-weight-bolder text-amber-1 playfair-font q-mb-xs">{{ chefPromo.nombre }}</div>
-              <p class="text-body1 text-grey-4 q-mb-md font-light">{{ chefPromo.descripcion }}</p>
+              <div class="text-overline text-amber-5 text-bold">Obra Maestra</div>
+              <div class="text-h4 text-weight-bolder text-amber-1 playfair-font q-mb-xs">{{ destacado.nombre }}</div>
+              <p class="text-body1 text-grey-4 q-mb-md font-light">{{ destacado.descripcion }}</p>
               <q-separator color="grey-8" class="q-my-md" />
               <div class="row items-center justify-between">
                 <div>
-                  <span class="text-caption text-grey-5 block">Precio de Promoción</span>
-                  <span class="text-h4 text-weight-bolder text-amber-4">{{ chefPromo.precio }}</span>
+                  <span class="text-caption text-grey-5 block">Precio</span>
+                  <span class="text-h4 text-weight-bolder text-amber-4">{{ destacado.precio }}</span>
                 </div>
                 <div class="row items-center q-gutter-sm">
-                  <q-btn flat round color="amber-5" icon="visibility" @click="abrirDetalle(chefPromo)" />
+                  <q-btn flat round color="amber-5" icon="visibility" @click="abrirDetalle(destacado)" />
                 </div>
               </div>
             </q-card-section>
@@ -46,15 +47,33 @@
         </q-card>
       </div>
 
-      <!-- Título Catálogo -->
       <div class="text-center q-mb-lg q-pt-md">
-        <h2 class="text-h5 text-weight-bold text-amber-2 playfair-font q-my-none">TODOS NUESTROS COMBOS</h2>
+        <h2 class="text-h5 text-weight-bold text-amber-2 playfair-font q-my-none">NUESTROS POSTRES</h2>
         <div class="gold-line q-mx-auto q-mt-xs"></div>
       </div>
 
-      <!-- Cuadrícula de Promociones -->
+      <div class="q-mb-lg">
+        <div class="row items-center q-gutter-sm q-mb-md">
+          <q-btn v-for="cat in categoriasFiltro" :key="cat.value" :label="cat.label" :icon="cat.icon"
+            :unelevated="filtroActivo === cat.value" :flat="filtroActivo !== cat.value"
+            :class="['filter-btn', { 'filter-btn-active': filtroActivo === cat.value }]"
+            @click="filtroActivo = cat.value" no-caps />
+        </div>
+
+        <div class="search-container">
+          <q-input v-model="busqueda" placeholder="Buscar postre..." dense dark outlined class="search-input">
+            <template v-slot:prepend>
+              <q-icon name="search" color="amber-5" />
+            </template>
+            <template v-slot:append v-if="busqueda">
+              <q-icon name="close" class="cursor-pointer" @click="busqueda = ''" />
+            </template>
+          </q-input>
+        </div>
+      </div>
+
       <div class="row q-col-gutter-lg items-stretch">
-        <div v-for="(producto, index) in promos" :key="index" class="col-12 col-sm-6 col-md-4 flex">
+        <div v-for="(producto, index) in productosFiltrados" :key="index" class="col-12 col-sm-6 col-md-4 flex">
           <q-card
             class="card-gourmet bg-grey-9 text-grey-2 full-height full-width border-grey border-radius-md overflow-hidden flex column justify-between">
             <div>
@@ -84,7 +103,6 @@
       </div>
     </div>
 
-    <!-- Modal Detalle del Producto -->
     <q-dialog v-model="modalDetalle">
       <q-card class="bg-grey-9 text-grey-2 border-gold border-radius-lg overflow-hidden"
         style="width: 500px; max-width: 90vw;">
@@ -108,12 +126,12 @@
 
           <p class="text-body2 text-grey-4 font-light q-mb-md">{{ productoSeleccionado.descripcion }}</p>
 
-          <div v-if="productoSeleccionado.incluye && productoSeleccionado.incluye.length" class="q-mb-md">
+          <div v-if="productoSeleccionado.ingredientes && productoSeleccionado.ingredientes.length" class="q-mb-md">
             <div class="text-subtitle2 text-amber-2 text-bold q-mb-xs">
-              <q-icon name="stars" class="q-mr-xs" /> Qué incluye esta promoción:
+              <q-icon name="stars" class="q-mr-xs" /> Ingredientes:
             </div>
             <div class="row q-gutter-xs">
-              <q-chip v-for="(item, idx) in productoSeleccionado.incluye" :key="idx" outline color="amber-5"
+              <q-chip v-for="(item, idx) in productoSeleccionado.ingredientes" :key="idx" outline color="amber-5"
                 text-color="grey-2" size="sm" icon="check">
                 {{ item }}
               </q-chip>
@@ -122,7 +140,7 @@
 
           <div class="q-mt-md">
             <q-input v-model="instruccionesEspeciales" outlined dense dark color="amber-5"
-              label="Notas para el pedido (p. ej. sabores de gaseosas)" />
+              label="Notas para el pedido (p. ej. adición de helado)" />
           </div>
         </q-card-section>
       </q-card>
