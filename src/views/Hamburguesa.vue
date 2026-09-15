@@ -15,8 +15,8 @@
       </q-img>
     </div>
 
-    <div class="container q-mx-auto q-px-md q-mt-xl" style="max-width: 1100px;">
-      <div class="q-mb-xl">
+    <div class="full-width q-px-sm q-mt-xl">
+      <div class="q-mb-xl q-mx-auto" style="max-width: 1400px;">
         <div class="text-center q-mb-lg">
           <q-icon name="lunch_dining" color="amber-5" size="28px" />
           <div class="text-caption text-uppercase letter-spacing-2 text-amber-5 text-bold">Favorita de la Casa</div>
@@ -51,96 +51,97 @@
         <div class="gold-line q-mx-auto q-mt-xs"></div>
       </div>
 
-      <div class="q-mb-lg">
-        <div class="row items-center q-gutter-sm q-mb-md">
-          <q-btn v-for="cat in categoriasFiltro" :key="cat.value" :label="cat.label" :icon="cat.icon"
-            :unelevated="filtroActivo === cat.value" :flat="filtroActivo !== cat.value"
-            :class="['filter-btn', { 'filter-btn-active': filtroActivo === cat.value }]"
-            @click="filtroActivo = cat.value" no-caps />
+      <div class="q-mb-lg q-mx-auto" style="max-width: 1400px;">
+        <div class="row items-center justify-between q-gutter-y-sm q-mb-md">
+          <div class="row items-center q-gutter-xs">
+            <q-btn v-for="cat in categoriasFiltro" :key="cat.value" :label="cat.label" :icon="cat.icon"
+              :unelevated="filtroActivo === cat.value" :flat="filtroActivo !== cat.value"
+              :class="['filter-btn', { 'filter-btn-active': filtroActivo === cat.value }]"
+              @click="filtroActivo = cat.value" no-caps />
+          </div>
+
+          <div class="search-container">
+            <q-input v-model="busqueda" placeholder="Buscar por ingrediente o nombre..." dense dark outlined
+              class="search-input">
+              <template v-slot:prepend>
+                <q-icon name="search" color="amber-5" />
+              </template>
+              <template v-slot:append v-if="busqueda">
+                <q-icon name="close" class="cursor-pointer" @click="busqueda = ''" />
+              </template>
+            </q-input>
+          </div>
         </div>
 
-        <div class="search-container">
-          <q-input v-model="busqueda" placeholder="Buscar por ingrediente o nombre..." dense dark outlined
-            class="search-input">
-            <template v-slot:prepend>
-              <q-icon name="search" color="amber-5" />
-            </template>
-            <template v-slot:append v-if="busqueda">
-              <q-icon name="close" class="cursor-pointer" @click="busqueda = ''" />
-            </template>
-          </q-input>
-        </div>
-      </div>
+        <div class="products-grid-4">
+          <q-card v-for="(producto, index) in productosFiltrados" :key="index"
+            class="card-narrow bg-grey-9 text-grey-2 border-grey border-radius-md overflow-hidden flex column justify-between">
 
-      <div class="row q-col-gutter-lg items-stretch">
-        <div v-for="(producto, index) in productosFiltrados" :key="index" class="col-12 col-sm-6 col-md-4 flex">
-          <q-card
-            class="card-gourmet bg-grey-9 text-grey-2 full-height full-width border-grey border-radius-md overflow-hidden flex column justify-between">
             <div>
-              <q-img :src="producto.imagen" height="220px" fit="cover" position="center" class="full-width product-img">
+              <q-img :src="producto.imagen" height="180px" fit="cover" class="full-width product-img">
                 <div v-if="producto.etiqueta" class="absolute-top-right bg-transparent q-pa-xs">
-                  <q-chip color="amber-9" text-color="grey-1" size="sm" class="text-bold">
+                  <q-chip color="amber-9" text-color="grey-1" size="xs" class="text-bold q-ma-none">
                     {{ producto.etiqueta }}
                   </q-chip>
                 </div>
               </q-img>
 
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 text-weight-bold text-amber-1 playfair-font q-mb-xs">{{ producto.nombre }}</div>
-                <div class="text-body2 text-grey-4 font-light">{{ producto.descripcion }}</div>
+              <q-card-section class="q-pa-sm">
+                <div class="text-subtitle2 text-weight-bold text-amber-1 playfair-font title-clamp">{{ producto.nombre
+                  }}</div>
+                <div class="text-caption text-grey-4 font-light desc-clamp q-mt-xs">{{ producto.descripcion }}</div>
               </q-card-section>
             </div>
 
-            <q-card-actions class="row items-center justify-between q-px-md q-pb-md q-pt-lg">
+            <q-card-actions class="row items-center justify-between q-px-sm q-pb-sm q-pt-none">
               <div>
-                <div class="text-caption text-grey-5 uppercase">Precio COP</div>
-                <span class="text-h6 text-weight-bold text-amber-4">{{ producto.precio }}</span>
+                <div class="text-caption text-grey-5 uppercase" style="font-size: 0.65rem;">Precio COP</div>
+                <span class="text-subtitle1 text-weight-bold text-amber-4">{{ producto.precio }}</span>
               </div>
-              <q-btn flat round color="amber-5" icon="visibility" @click="abrirDetalle(producto)" />
+              <q-btn flat round dense color="amber-5" icon="visibility" @click="abrirDetalle(producto)" />
             </q-card-actions>
+
           </q-card>
         </div>
       </div>
     </div>
 
     <q-dialog v-model="modalDetalle">
-      <q-card class="bg-grey-9 text-grey-2 border-gold border-radius-lg overflow-hidden"
-        style="width: 500px; max-width: 90vw;">
+      <q-card class="bg-grey-9 text-grey-2 border-gold border-radius-lg overflow-hidden modal-amplio">
         <div class="relative-position bg-black">
-          <q-img :src="productoSeleccionado.imagen" height="260px" fit="contain" class="full-width modal-img">
-            <div v-if="productoSeleccionado.etiqueta" class="absolute-top-left bg-transparent q-pa-xs">
-              <q-chip color="amber-9" text-color="grey-1" size="sm" class="text-bold">
+          <q-img :src="productoSeleccionado.imagen" height="360px" fit="cover" class="full-width modal-img">
+            <div v-if="productoSeleccionado.etiqueta" class="absolute-top-left bg-transparent q-pa-sm">
+              <q-chip color="amber-9" text-color="grey-1" size="md" class="text-bold">
                 ★ {{ productoSeleccionado.etiqueta }}
               </q-chip>
             </div>
           </q-img>
-          <q-btn icon="close" flat round dense v-close-popup color="white" class="absolute-top-right q-ma-xs"
+          <q-btn icon="close" flat round dense v-close-popup color="white" class="absolute-top-right q-ma-sm"
             style="background: rgba(0,0,0,0.6);" />
         </div>
 
-        <q-card-section class="q-pt-md">
-          <div class="row items-center justify-between q-mb-xs">
-            <div class="text-h5 text-weight-bold text-amber-1 playfair-font">{{ productoSeleccionado.nombre }}</div>
-            <div class="text-h5 text-weight-bolder text-amber-4">{{ productoSeleccionado.precio }}</div>
+        <q-card-section class="q-pa-lg">
+          <div class="row items-center justify-between q-mb-sm">
+            <div class="text-h4 text-weight-bold text-amber-1 playfair-font">{{ productoSeleccionado.nombre }}</div>
+            <div class="text-h4 text-weight-bolder text-amber-4">{{ productoSeleccionado.precio }}</div>
           </div>
 
-          <p class="text-body2 text-grey-4 font-light q-mb-md">{{ productoSeleccionado.descripcion }}</p>
+          <q-separator color="amber-9" class="q-mb-md" />
 
-          <div v-if="productoSeleccionado.ingredientes && productoSeleccionado.ingredientes.length" class="q-mb-md">
-            <div class="text-subtitle2 text-amber-2 text-bold q-mb-xs">
-              <q-icon name="stars" class="q-mr-xs" /> Ingredientes:
+          <div class="text-subtitle1 text-grey-3 font-light q-mb-lg leading-relaxed">
+            {{ productoSeleccionado.descripcion }}
+          </div>
+
+          <div v-if="productoSeleccionado.ingredientes && productoSeleccionado.ingredientes.length" class="q-mb-sm">
+            <div class="text-subtitle1 text-amber-3 text-bold q-mb-sm flex items-center">
+              <q-icon name="stars" color="amber-5" size="20px" class="q-mr-xs" /> Ingredientes Seleccionados:
             </div>
-            <div class="row q-gutter-xs">
+            <div class="row q-gutter-sm">
               <q-chip v-for="(item, idx) in productoSeleccionado.ingredientes" :key="idx" outline color="amber-5"
-                text-color="grey-2" size="sm" icon="check">
+                text-color="grey-2" size="md" icon="check">
                 {{ item }}
               </q-chip>
             </div>
-          </div>
-
-          <div class="q-mt-md">
-            <q-input v-model="instruccionesEspeciales" outlined dense dark color="amber-5"
-              label="Notas (p. ej. término de la carne, sin cebolla)" />
           </div>
         </q-card-section>
       </q-card>
@@ -153,7 +154,6 @@ import { ref, computed } from 'vue'
 
 const modalDetalle = ref(false)
 const productoSeleccionado = ref({})
-const instruccionesEspeciales = ref('')
 
 const filtroActivo = ref('todos')
 const busqueda = ref('')
@@ -167,50 +167,49 @@ const categoriasFiltro = [
 
 const abrirDetalle = (producto) => {
   productoSeleccionado.value = producto
-  instruccionesEspeciales.value = ''
   modalDetalle.value = true
 }
 
 const destacado = {
   nombre: "Truffle & Truffle Angus",
-  descripcion: "200g de carne Angus, queso Gouda madurado, cebolla caramelizada al vino tinto, mayonesa de trufa negra y pan brioche artesanal.",
+  descripcion: "200g de selecta carne Black Angus sellada a fuego alto, acompañada de una cremosa mayonesa artesanal de trufa negra importada, láminas de queso Gouda madurado con fusión lenta, cebollas caramelizadas al vino tinto y servida en un suave pan brioche tostado con mantequilla de ajo.",
   precio: "$32.000",
   imagen: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=600&auto=format&fit=crop",
-  ingredientes: ["200g Carne Angus", "Queso Gouda", "Cebolla Caramelizada", "Mayonesa de Trufa", "Pan Brioche"]
+  ingredientes: ["200g Carne Black Angus", "Queso Gouda Madurado", "Cebolla Caramelizada al Vino", "Mayonesa de Trufa Negra", "Pan Brioche de la Casa"]
 }
 
 const productos = [
   {
     nombre: "Classic Bacon Cheeseburger",
-    descripcion: "180g de carne de res, queso cheddar fundido, doble tocineta crocante, pepinillos, lechuga y salsa especial.",
+    descripcion: "Corte premium de 180g de carne de res, bañada en doble capa de queso cheddar inglés fundido, crujientes tiras de tocineta ahumada al nogal, pepinillos dulces artesanales, lechuga cogollo fresca y nuestra mítica salsa especial de la casa.",
     precio: "$26.000",
     etiqueta: "Más pedido",
     imagen: "https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=500&auto=format&fit=crop",
-    ingredientes: ["Carne de Res 180g", "Cheddar", "Tocineta", "Pepinillos", "Salsa de la casa"]
+    ingredientes: ["Carne de Res 180g", "Queso Cheddar Inglés", "Tocineta Ahumada", "Pepinillos Dulces", "Salsa Especial", "Pan Brioche"]
   },
   {
     nombre: "Smoky BBQ Supreme",
-    descripcion: "Carne a la parrilla, queso Jack ahumado, aros de cebolla crocantes, tocineta y salsa BBQ ahumada artesanal.",
+    descripcion: "Jugosa carne asada a la parrilla sobre brasas de carbón vegetal, queso Monterrey Jack fundido, crujientes aros de cebolla apanados en cerveza, tocineta ahumada y bañada en abundante salsa BBQ artesanal con notas de miel y humo ahumado.",
     precio: "$28.000",
     etiqueta: "Recomendada",
     imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgCjBXNP0Dgc0_ezyATJnjnxyz8-yN-pQpN5NHxrlAXljjE-ASMOlyXPE&s=10",
-    ingredientes: ["Carne Parrillera", "Queso Jack", "Aros de Cebolla", "Salsa BBQ"]
+    ingredientes: ["Carne Parrillera 180g", "Queso Monterrey Jack", "Aros de Cebolla a la Cerveza", "Tocineta", "Salsa BBQ Artesanal"]
   },
   {
     nombre: "Doble Smash Burger",
-    descripcion: "Dos medallones smash de 100g, cuádruple queso americano, cebolla picada, pepinillos y mostaza artesanal.",
+    descripcion: "Dos medallones de carne 100% de res de 100g cada uno aplastados a la plancha para lograr bordes extra crujientes, entrelazados con cuatro lonchas de queso americano derretido, cebolla blanca en cubos, pepinillos en salmuera y mostaza dijon.",
     precio: "$25.000",
     etiqueta: "Más pedido",
     imagen: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?q=80&w=500&auto=format&fit=crop",
-    ingredientes: ["2 Medallones Smash", "Queso Americano", "Cebolla", "Pepinillos"]
+    ingredientes: ["2 Medallones Smash (200g)", "Cuádruple Queso Americano", "Cebolla Picada", "Pepinillos Artesanales", "Mostaza Dijon"]
   },
   {
     nombre: "Blue Cheese & Mushroom",
-    descripcion: "Carne de res 180g, queso azul fundido, champiñones salteados en mantequilla de ajo y rúgula fresca.",
+    descripcion: "Carne de res seleccionada de 180g, cubierta con una generosa capa de queso azul Roquefort derretido, champiñones Paris salteados en mantequilla de ajo y finas hierbas, coronada con hojas de rúgula fresca y reducción de balsámico.",
     precio: "$29.000",
     etiqueta: "Nueva",
     imagen: "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?q=80&w=500&auto=format&fit=crop",
-    ingredientes: ["Carne de Res 180g", "Queso Azul", "Champiñones al Ajo", "Rúgula"]
+    ingredientes: ["Carne de Res 180g", "Queso Azul Roquefort", "Champiñones al Ajo", "Rúgula Fresca", "Reducción de Balsámico"]
   }
 ]
 
@@ -233,6 +232,52 @@ const productosFiltrados = computed(() => {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,400&display=swap');
+
+.modal-amplio {
+  width: 700px !important;
+  max-width: 95vw !important;
+}
+
+.leading-relaxed {
+  line-height: 1.6;
+}
+
+.products-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  width: 100%;
+}
+
+.card-narrow {
+  width: 100%;
+  height: 100%;
+  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.card-narrow:hover {
+  transform: translateY(-4px);
+  border-color: #d4af37;
+  box-shadow: 0 8px 16px rgba(212, 175, 55, 0.2);
+}
+
+.title-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 0.85rem;
+  line-height: 1.2;
+}
+
+.desc-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 0.75rem;
+  line-height: 1.25;
+}
 
 .playfair-font {
   font-family: 'Playfair Display', Georgia, serif;
@@ -265,7 +310,7 @@ const productosFiltrados = computed(() => {
 }
 
 .border-radius-md {
-  border-radius: 12px;
+  border-radius: 8px;
 }
 
 .font-light {
@@ -276,24 +321,12 @@ const productosFiltrados = computed(() => {
   font-style: italic;
 }
 
-.card-gourmet {
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.card-gourmet:hover {
-  transform: translateY(-6px);
-  border-color: #d4af37;
-  box-shadow: 0 12px 24px rgba(212, 175, 55, 0.2);
-}
-
 .uppercase {
   text-transform: uppercase;
-  font-size: 0.7rem;
 }
 
 .product-img {
-  height: 220px !important;
-  max-height: 220px !important;
+  height: 180px !important;
 }
 
 :deep(.product-img .q-img__image) {
@@ -301,7 +334,7 @@ const productosFiltrados = computed(() => {
   background-position: center center !important;
   object-fit: cover !important;
   object-position: center !important;
-  height: 220px !important;
+  height: 180px !important;
 }
 
 :deep(.chef-img .q-img__image) {
@@ -311,19 +344,18 @@ const productosFiltrados = computed(() => {
 }
 
 :deep(.modal-img .q-img__image) {
-  object-fit: contain !important;
+  object-fit: cover !important;
   object-position: center !important;
-  background-size: contain !important;
-  background-position: center !important;
+  background-size: cover !important;
 }
 
 .filter-btn {
   color: #ffffff !important;
-  font-weight: 700;
-  font-size: 0.82rem;
+  font-weight: 600;
+  font-size: 0.78rem;
   letter-spacing: 0.5px;
-  border-radius: 20px;
-  padding: 4px 16px;
+  border-radius: 16px;
+  padding: 2px 10px;
   transition: all 0.2s ease-in-out;
 }
 
@@ -335,11 +367,11 @@ const productosFiltrados = computed(() => {
 .filter-btn-active {
   background-color: #ffc107 !important;
   color: #121212 !important;
-  border-radius: 20px;
+  border-radius: 16px;
 }
 
 .search-container {
-  max-width: 380px;
+  width: 280px;
 }
 
 .search-input :deep(.q-field__inner) {
@@ -359,16 +391,22 @@ const productosFiltrados = computed(() => {
 
 .search-input :deep(input) {
   color: #e0e0e0 !important;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 .search-input :deep(input::placeholder) {
   color: #9e9e9e !important;
 }
 
-@media (max-width: 1023px) {
-  .border-responsive {
-    flex-direction: column;
+@media (max-width: 900px) {
+  .products-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .products-grid-4 {
+    grid-template-columns: 1fr;
   }
 }
 </style>
