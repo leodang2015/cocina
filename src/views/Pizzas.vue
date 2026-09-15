@@ -51,15 +51,15 @@
         <div class="gold-line q-mx-auto q-mt-xs"></div>
       </div>
 
-      <div class="q-mb-lg">
-        <div class="row items-center q-gutter-sm q-mb-md">
+      <div class="q-mb-lg row items-center justify-between q-col-gutter-md">
+        <div class="row items-center q-gutter-sm">
           <q-btn v-for="cat in categoriasFiltro" :key="cat.value" :label="cat.label" :icon="cat.icon"
             :unelevated="filtroActivo === cat.value" :flat="filtroActivo !== cat.value"
             :class="['filter-btn', { 'filter-btn-active': filtroActivo === cat.value }]"
             @click="filtroActivo = cat.value" no-caps />
         </div>
 
-        <div class="search-container">
+        <div class="search-container full-width-sm">
           <q-input v-model="busqueda" placeholder="Buscar por ingrediente o nombre..." dense dark outlined
             class="search-input">
             <template v-slot:prepend>
@@ -107,7 +107,7 @@
       <q-card class="bg-grey-9 text-grey-2 border-gold border-radius-lg overflow-hidden"
         style="width: 500px; max-width: 90vw;">
         <div class="relative-position bg-black">
-          <q-img :src="productoSeleccionado.imagen" height="260px" fit="contain" class="full-width modal-img">
+          <q-img :src="productoSeleccionado.imagen" height="260px" fit="cover" class="full-width modal-img">
             <div v-if="productoSeleccionado.etiqueta" class="absolute-top-left bg-transparent q-pa-xs">
               <q-chip color="amber-9" text-color="grey-1" size="sm" class="text-bold">
                 ★ {{ productoSeleccionado.etiqueta }}
@@ -311,9 +311,9 @@ const productosFiltrados = computed(() => {
 }
 
 :deep(.modal-img .q-img__image) {
-  object-fit: contain !important;
+  object-fit: cover !important;
   object-position: center !important;
-  background-size: contain !important;
+  background-size: cover !important;
   background-position: center !important;
 }
 
@@ -339,7 +339,7 @@ const productosFiltrados = computed(() => {
 }
 
 .search-container {
-  max-width: 380px;
+  width: 320px;
 }
 
 .search-input :deep(.q-field__inner) {
@@ -369,6 +369,12 @@ const productosFiltrados = computed(() => {
 @media (max-width: 1023px) {
   .border-responsive {
     flex-direction: column;
+  }
+}
+
+@media (max-width: 600px) {
+  .full-width-sm {
+    width: 100%;
   }
 }
 </style>
