@@ -1,14 +1,14 @@
 <template>
   <q-page class="bg-grey-10 text-grey-2 q-pb-xl">
     <div class="banner-container relative-position">
-      <q-img src="https://images.unsplash.com/photo-1619740455993-9e612b1af08a?q=80&w=1200&auto=format&fit=crop"
+      <q-img src="https://images.unsplash.com/photo-1619740455993-9e612b1af08a?q=80&w=1000&auto=format&fit=crop"
         height="260px" fit="cover">
         <div class="absolute-full flex flex-center bg-overlay">
           <div class="text-center text-amber-2 q-px-md">
-            <div class="text-overline letter-spacing-2 text-amber-5 text-bold">Haute Cuisine Casual</div>
-            <h1 class="text-h3 text-weight-bolder q-my-xs playfair-font">Perros de Autor</h1>
+            <div class="text-overline letter-spacing-2 text-amber-5 text-bold">Salchichas Premium & Pan Brioche</div>
+            <h1 class="text-h3 text-weight-bolder q-my-xs playfair-font">Perros Calientes Gourmet</h1>
             <p class="text-subtitle1 text-grey-4 font-italic" style="max-width: 600px; margin: 0 auto;">
-              Salchichas artesanales, panes brioche de masa madre y emulsiones hechas en casa.
+              El clásico street food elevado al siguiente nivel gastronómico.
             </p>
           </div>
         </div>
@@ -18,28 +18,28 @@
     <div class="container q-mx-auto q-px-md q-mt-xl" style="max-width: 1100px;">
       <div class="q-mb-xl">
         <div class="text-center q-mb-lg">
-          <q-icon name="restaurant" color="amber-5" size="28px" />
-          <div class="text-caption text-uppercase letter-spacing-2 text-amber-5 text-bold">Firma del Chef</div>
-          <h2 class="text-h4 text-weight-bold text-amber-1 q-my-none playfair-font">Creación Exclusiva</h2>
+          <q-icon name="hot_dog" color="amber-5" size="28px" />
+          <div class="text-caption text-uppercase letter-spacing-2 text-amber-5 text-bold">El Más Aclamado</div>
+          <h2 class="text-h4 text-weight-bold text-amber-1 q-my-none playfair-font">Perro Insignia</h2>
           <div class="gold-line q-mx-auto q-mt-xs"></div>
         </div>
 
         <q-card class="bg-grey-9 text-grey-2 shadow-24 border-gold border-radius-lg overflow-hidden">
           <div class="row items-center border-responsive">
-            <q-img :src="chefDog.imagen" class="col-12 col-md-6 chef-img" height="320px" fit="cover" />
+            <q-img :src="destacado.imagen" class="col-12 col-md-6 chef-img" height="320px" fit="cover" />
             <q-card-section class="col-12 col-md-6 q-pa-lg">
-              <div class="text-overline text-amber-5 text-bold">Edición Limitada</div>
-              <div class="text-h4 text-weight-bolder text-amber-1 playfair-font q-mb-xs">{{ chefDog.nombre }}</div>
-              <p class="text-body1 text-grey-4 q-mb-md font-light">{{ chefDog.descripcion }}</p>
+              <div class="text-overline text-amber-5 text-bold">Recomendación de la Casa</div>
+              <div class="text-h4 text-weight-bolder text-amber-1 playfair-font q-mb-xs">{{ destacado.nombre }}</div>
+              <p class="text-body1 text-grey-4 q-mb-md font-light">{{ destacado.descripcion }}</p>
               <q-separator color="grey-8" class="q-my-md" />
               <div class="row items-center justify-between">
                 <div>
-                  <span class="text-caption text-grey-5 block">Precio de Degustación</span>
-                  <span class="text-h4 text-weight-bolder text-amber-4">{{ chefDog.precio }}</span>
+                  <span class="text-caption text-grey-5 block">Precio</span>
+                  <span class="text-h4 text-weight-bolder text-amber-4">{{ destacado.precio }}</span>
                 </div>
                 <div class="row items-center q-gutter-sm">
-                  <q-btn flat round color="amber-5" icon="visibility" @click="abrirDetalle(chefDog)" />
-                  <q-btn color="amber-7" text-color="grey-10" icon="restaurant_menu" label="Ordenar Creación"
+                  <q-btn flat round color="amber-5" icon="visibility" @click="abrirDetalle(destacado)" />
+                  <q-btn color="amber-7" text-color="grey-10" icon="shopping_bag" label="Pedir Ahora"
                     class="text-bold q-px-md" unelevated />
                 </div>
               </div>
@@ -49,12 +49,33 @@
       </div>
 
       <div class="text-center q-mb-lg q-pt-md">
-        <h2 class="text-h5 text-weight-bold text-amber-2 playfair-font q-my-none">NUESTRA CARTA DE AUTOR</h2>
+        <h2 class="text-h5 text-weight-bold text-amber-2 playfair-font q-my-none">NUESTROS PERROS CALIENTES</h2>
         <div class="gold-line q-mx-auto q-mt-xs"></div>
       </div>
 
+      <div class="q-mb-lg">
+        <div class="row items-center q-gutter-sm q-mb-md">
+          <q-btn v-for="cat in categoriasFiltro" :key="cat.value" :label="cat.label" :icon="cat.icon"
+            :unelevated="filtroActivo === cat.value" :flat="filtroActivo !== cat.value"
+            :class="['filter-btn', { 'filter-btn-active': filtroActivo === cat.value }]"
+            @click="filtroActivo = cat.value" no-caps />
+        </div>
+
+        <div class="search-container">
+          <q-input v-model="busqueda" placeholder="Buscar por ingrediente o nombre..." dense dark outlined
+            class="search-input">
+            <template v-slot:prepend>
+              <q-icon name="search" color="amber-5" />
+            </template>
+            <template v-slot:append v-if="busqueda">
+              <q-icon name="close" class="cursor-pointer" @click="busqueda = ''" />
+            </template>
+          </q-input>
+        </div>
+      </div>
+
       <div class="row q-col-gutter-lg items-stretch">
-        <div v-for="(producto, index) in dogs" :key="index" class="col-12 col-sm-6 col-md-4 flex">
+        <div v-for="(producto, index) in productosFiltrados" :key="index" class="col-12 col-sm-6 col-md-4 flex">
           <q-card
             class="card-gourmet bg-grey-9 text-grey-2 full-height full-width border-grey border-radius-md overflow-hidden flex column justify-between">
             <div>
@@ -109,19 +130,19 @@
 
           <div v-if="productoSeleccionado.ingredientes && productoSeleccionado.ingredientes.length" class="q-mb-md">
             <div class="text-subtitle2 text-amber-2 text-bold q-mb-xs">
-              <q-icon name="list_alt" class="q-mr-xs" /> Ingredientes incluidos:
+              <q-icon name="stars" class="q-mr-xs" /> Ingredientes:
             </div>
             <div class="row q-gutter-xs">
-              <q-chip v-for="(ing, idx) in productoSeleccionado.ingredientes" :key="idx" outline color="amber-5"
+              <q-chip v-for="(item, idx) in productoSeleccionado.ingredientes" :key="idx" outline color="amber-5"
                 text-color="grey-2" size="sm" icon="check">
-                {{ ing }}
+                {{ item }}
               </q-chip>
             </div>
           </div>
 
           <div class="q-mt-md">
             <q-input v-model="instruccionesEspeciales" outlined dense dark color="amber-5"
-              label="Instrucciones especiales para cocina (opcional)" />
+              label="Notas para el pedido (p. ej. sin cebolla, adición de ripio)" />
           </div>
         </q-card-section>
       </q-card>
@@ -130,11 +151,21 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 const modalDetalle = ref(false)
 const productoSeleccionado = ref({})
 const instruccionesEspeciales = ref('')
+
+const filtroActivo = ref('todos')
+const busqueda = ref('')
+
+const categoriasFiltro = [
+  { label: 'TODOS', value: 'todos', icon: 'hot_dog' },
+  { label: 'MÁS PEDIDOS', value: 'Más pedido', icon: 'local_fire_department' },
+  { label: 'ESPECIALES', value: 'Especial', icon: 'star' },
+  { label: 'TRADICIONALES', value: 'Tradicional', icon: 'restaurant' }
+]
 
 const abrirDetalle = (producto) => {
   productoSeleccionado.value = producto
@@ -142,48 +173,64 @@ const abrirDetalle = (producto) => {
   modalDetalle.value = true
 }
 
-const chefDog = {
-  nombre: "Trufa & Brie Haute Dog",
-  descripcion: "Salchicha artesanal de ternera infusionada con romero, queso Brie derretido, láminas de trufa negra fresca, mermelada de cebolla frita al oporto y pan brioche horneado al momento.",
-  precio: "$28.000",
-  imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwUpfH3V-4c8-xjVxO8ECw-FNc1dswEjdqt1DiaNg-X7fGNYakUXfrgato&s=8",
-  ingredientes: ["Salchicha de ternera al romero", "Queso Brie derretido", "Trufa negra fresca", "Mermelada de cebolla al oporto", "Pan Brioche artesanal"]
+const destacado = {
+  nombre: "Perro Suizo Extra Bacon",
+  descripcion: "Salchicha Suiza artesanal gratinada con abundante queso Gouda, tocino ahumado en cubos, cebolla gratinada y papas ripias caseras.",
+  precio: "$24.000",
+  imagen: "https://images.unsplash.com/photo-1619740455993-9e612b1af08a?q=80&w=600&auto=format&fit=crop",
+  ingredientes: ["Salchicha Suiza", "Queso Gouda", "Tocino Ahumado", "Papas Ripias"]
 }
 
-const dogs = [
+const productos = [
   {
-    nombre: "Perro Campestre al Ahumado",
-    descripcion: "Salchicha de cerdo marinada en finas hierbas, tocineta crocante ahumada con madera de roble y fondue de queso Gruyère.",
-    precio: "$19.000",
-    etiqueta: "Especialidad",
-    imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQweSq4kAUpPFoX57593Y_wSytNGYJTzvFt27iA3hVinjulOUpX4ZXGNig&s=10",
-    ingredientes: ["Salchicha de cerdo a las finas hierbas", "Tocineta ahumada al roble", "Fondue de queso Gruyère"]
-  },
-  {
-    nombre: "Perro Suizo Glaseado",
-    descripcion: "Salchicha suiza tradicional, queso Emmental gratinado, chutney de piña artesanal y lluvia de alioli de ajos asados.",
-    precio: "$21.500",
-    etiqueta: "Recomendado",
-    imagen: "https://images.unsplash.com/photo-1619740455993-9e612b1af08a?q=80&w=500&auto=format&fit=crop",
-    ingredientes: ["Salchicha suiza tradicional", "Queso Emmental gratinado", "Chutney de piña artesanal", "Alioli de ajos asados"]
-  },
-  {
-    nombre: "Perro Serrano & Jalapeño",
-    descripcion: "Carne picada de res madurada, suero costeño batido con lima, pico de gallo con cilantro silvestre y crocante de maíz.",
+    nombre: "Perro Mexicano Jalapeño",
+    descripcion: "Salchicha premium, carne molida especiada estilo chili, queso cheddar derretido, jalapeños en rodajas y guacamole fresco.",
     precio: "$22.000",
-    etiqueta: "Toque Picante",
-    imagen: "https://images.unsplash.com/photo-1541214113241-21578d2d9b62?q=80&w=500&auto=format&fit=crop",
-    ingredientes: ["Carne de res madurada", "Suero costeño a la lima", "Pico de gallo", "Jalapeños", "Crocante de maíz"]
+    etiqueta: "Especial",
+    imagen: "https://images.unsplash.com/photo-1612392062631-9bde0883d614?q=80&w=500&auto=format&fit=crop",
+    ingredientes: ["Chili con Carne", "Cheddar", "Jalapeños", "Guacamole"]
   },
   {
-    nombre: "Perro Botánico Veggie",
-    descripcion: "Salchicha de setas y portobellos, vegetales baby salteados en vino blanco, hummus de garbanzo y mayonesa vegetal.",
-    precio: "$18.500",
-    etiqueta: "Plant Based",
-    imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrBX8a2N1khxVyeiCtk15Dt2TNmFfGUrdmhTOcv0hkx6ge4SViBlGyQbOm&s=10",
-    ingredientes: ["Salchicha de setas y portobello", "Vegetales baby al vino blanco", "Hummus de garbanzo", "Mayonesa vegetal"]
+    nombre: "Perro Callejero Clásico",
+    descripcion: "Salchicha marianera, lluvia de papa crocante, queso costeño rallado, salsa de la casa, tártara y piña dulce artesanal.",
+    precio: "$18.000",
+    etiqueta: "Más pedido",
+    imagen: "https://images.unsplash.com/photo-1541214113241-21578d2d9b62?q=80&w=500&auto=format&fit=crop",
+    ingredientes: ["Salchicha Marianera", "Papas Ripias", "Queso Costeño", "Salsa Piña"]
+  },
+  {
+    nombre: "Perro BBQ & Crisp Onion",
+    descripcion: "Salchicha alemana, tocineta crujiente, cebolla frita crocante, queso mozzarella gratinado y salsa BBQ de la casa.",
+    precio: "$23.000",
+    etiqueta: "Más pedido",
+    imagen: "https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?q=80&w=500&auto=format&fit=crop",
+    ingredientes: ["Salchicha Alemana", "Cebolla Crocante", "BBQ", "Mozzarella"]
+  },
+  {
+    nombre: "Perro Sencillo Tradicional",
+    descripcion: "Salchicha marianera en pan caliente de mantequilla, papa ripia, queso derretido y salsas tradicionales a elección.",
+    precio: "$15.000",
+    etiqueta: "Tradicional",
+    imagen: "https://images.unsplash.com/photo-1619740455993-9e612b1af08a?q=80&w=500&auto=format&fit=crop",
+    ingredientes: ["Salchicha Marianera", "Pan de Mantequilla", "Papa Ripia"]
   }
 ]
+
+const productosFiltrados = computed(() => {
+  return productos.filter(prod => {
+    const texto = busqueda.value.toLowerCase().trim()
+    const coincideTexto = !texto ||
+      prod.nombre.toLowerCase().includes(texto) ||
+      prod.descripcion.toLowerCase().includes(texto)
+
+    let coincideFiltro = true
+    if (filtroActivo.value !== 'todos') {
+      coincideFiltro = prod.etiqueta === filtroActivo.value
+    }
+
+    return coincideTexto && coincideFiltro
+  })
+})
 </script>
 
 <style scoped>
@@ -270,6 +317,55 @@ const dogs = [
   object-position: center !important;
   background-size: contain !important;
   background-position: center !important;
+}
+
+.filter-btn {
+  color: #ffffff !important;
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.5px;
+  border-radius: 20px;
+  padding: 4px 16px;
+  transition: all 0.2s ease-in-out;
+}
+
+.filter-btn:hover {
+  background: rgba(255, 193, 7, 0.15) !important;
+  color: #ffc107 !important;
+}
+
+.filter-btn-active {
+  background-color: #ffc107 !important;
+  color: #121212 !important;
+  border-radius: 20px;
+}
+
+.search-container {
+  max-width: 380px;
+}
+
+.search-input :deep(.q-field__inner) {
+  border-radius: 6px;
+}
+
+.search-input :deep(.q-field__control) {
+  background-color: #2b2b2b !important;
+  border-radius: 6px;
+  border: 1px solid #4f4f4f;
+}
+
+.search-input :deep(.q-field__control:before),
+.search-input :deep(.q-field__control:after) {
+  display: none;
+}
+
+.search-input :deep(input) {
+  color: #e0e0e0 !important;
+  font-size: 0.9rem;
+}
+
+.search-input :deep(input::placeholder) {
+  color: #9e9e9e !important;
 }
 
 @media (max-width: 1023px) {
