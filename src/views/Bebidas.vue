@@ -1,14 +1,15 @@
 <template>
   <q-page class="bg-grey-10 text-grey-2 q-pb-xl">
     <div class="banner-container relative-position">
-      <q-img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?q=80&w=1200&auto=format&fit=crop"
+      <q-img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=1000&auto=format&fit=crop"
         height="260px" fit="cover">
         <div class="absolute-full flex flex-center bg-overlay">
-          <div class="text-center text-amber-2">
-            <div class="text-overline letter-spacing-2 text-amber-5">Mixología & Maridaje</div>
-            <h1 class="text-h3 text-weight-bolder q-my-xs playfair-font">Elixir & Refrescos</h1>
-            <p class="text-subtitle1 text-grey-4 font-italic">Infusiones de botánicos, frutas de temporada y cócteles
-              artesanales sin alcohol.</p>
+          <div class="text-center text-amber-2 q-px-md">
+            <div class="text-overline letter-spacing-2 text-amber-5 text-bold">Refrescantes y Exclusivas</div>
+            <h1 class="text-h3 text-weight-bolder q-my-xs playfair-font">Bebidas & Cocteles</h1>
+            <p class="text-subtitle1 text-grey-4 font-italic" style="max-width: 600px; margin: 0 auto;">
+              El maridaje perfecto para acompañar cualquiera de nuestros platos.
+            </p>
           </div>
         </div>
       </q-img>
@@ -18,26 +19,27 @@
       <div class="q-mb-xl">
         <div class="text-center q-mb-lg">
           <q-icon name="local_bar" color="amber-5" size="28px" />
-          <div class="text-caption text-uppercase letter-spacing-2 text-amber-5 text-bold">Creación del Mixólogo</div>
+          <div class="text-caption text-uppercase letter-spacing-2 text-amber-5 text-bold">Coctel de la Casa</div>
           <h2 class="text-h4 text-weight-bold text-amber-1 q-my-none playfair-font">Bebida Insignia</h2>
+          <div class="gold-line q-mx-auto q-mt-xs"></div>
         </div>
 
         <q-card class="bg-grey-9 text-grey-2 shadow-24 border-gold border-radius-lg overflow-hidden">
-          <div class="row no-wrap border-responsive items-center">
-            <q-img :src="chefBebida.imagen" class="col-12 col-md-6" height="300px" fit="cover" />
+          <div class="row items-center border-responsive">
+            <q-img :src="destacado.imagen" class="col-12 col-md-6 chef-img" height="320px" fit="cover" />
             <q-card-section class="col-12 col-md-6 q-pa-lg">
-              <div class="text-overline text-amber-5 text-bold">Signature Mocktail</div>
-              <div class="text-h4 text-weight-bolder text-amber-1 playfair-font q-mb-xs">{{ chefBebida.nombre }}</div>
-              <p class="text-body1 text-grey-4 q-mb-md font-light">{{ chefBebida.descripcion }}</p>
+              <div class="text-overline text-amber-5 text-bold">Mixología de Autor</div>
+              <div class="text-h4 text-weight-bolder text-amber-1 playfair-font q-mb-xs">{{ destacado.nombre }}</div>
+              <p class="text-body1 text-grey-4 q-mb-md font-light">{{ destacado.descripcion }}</p>
               <q-separator color="grey-8" class="q-my-md" />
               <div class="row items-center justify-between">
                 <div>
-                  <span class="text-caption text-grey-5 block">Servido Helado</span>
-                  <span class="text-h4 text-weight-bolder text-amber-4">{{ chefBebida.precio }}</span>
+                  <span class="text-caption text-grey-5 block">Precio</span>
+                  <span class="text-h4 text-weight-bolder text-amber-4">{{ destacado.precio }}</span>
                 </div>
                 <div class="row items-center q-gutter-sm">
-                  <q-btn flat round color="amber-5" icon="visibility" @click="abrirDetalle(chefBebida)" />
-                  <q-btn color="amber-7" text-color="grey-10" icon="local_drink" label="Pedir Coctel"
+                  <q-btn flat round color="amber-5" icon="visibility" @click="abrirDetalle(destacado)" />
+                  <q-btn color="amber-7" text-color="grey-10" icon="shopping_bag" label="Pedir Ahora"
                     class="text-bold q-px-md" unelevated />
                 </div>
               </div>
@@ -47,28 +49,50 @@
       </div>
 
       <div class="text-center q-mb-lg q-pt-md">
-        <h2 class="text-h5 text-weight-bold text-amber-2 playfair-font q-my-none">CARTA DE BEBIDAS Y REFRESHERS</h2>
+        <h2 class="text-h5 text-weight-bold text-amber-2 playfair-font q-my-none">NUESTRA CARTA DE BEBIDAS</h2>
         <div class="gold-line q-mx-auto q-mt-xs"></div>
       </div>
 
-      <div class="row q-col-gutter-lg">
-        <div v-for="(producto, index) in bebidas" :key="index" class="col-12 col-sm-6 col-md-4">
+      <div class="q-mb-lg">
+        <div class="row items-center q-gutter-sm q-mb-md">
+          <q-btn v-for="cat in categoriasFiltro" :key="cat.value" :label="cat.label" :icon="cat.icon"
+            :unelevated="filtroActivo === cat.value" :flat="filtroActivo !== cat.value"
+            :class="['filter-btn', { 'filter-btn-active': filtroActivo === cat.value }]"
+            @click="filtroActivo = cat.value" no-caps />
+        </div>
+
+        <div class="search-container">
+          <q-input v-model="busqueda" placeholder="Buscar bebida..." dense dark outlined class="search-input">
+            <template v-slot:prepend>
+              <q-icon name="search" color="amber-5" />
+            </template>
+            <template v-slot:append v-if="busqueda">
+              <q-icon name="close" class="cursor-pointer" @click="busqueda = ''" />
+            </template>
+          </q-input>
+        </div>
+      </div>
+
+      <div class="row q-col-gutter-lg items-stretch">
+        <div v-for="(producto, index) in productosFiltrados" :key="index" class="col-12 col-sm-6 col-md-4 flex">
           <q-card
-            class="card-gourmet bg-grey-9 text-grey-2 full-height flex flex-center column justify-between border-grey border-radius-md overflow-hidden">
-            <q-img :src="producto.imagen" height="220px" fit="cover">
-              <div v-if="producto.etiqueta" class="absolute-top-right bg-transparent q-pa-xs">
-                <q-chip color="amber-9" text-color="grey-1" size="sm" class="text-bold">
-                  {{ producto.etiqueta }}
-                </q-chip>
-              </div>
-            </q-img>
+            class="card-gourmet bg-grey-9 text-grey-2 full-height full-width border-grey border-radius-md overflow-hidden flex column justify-between">
+            <div>
+              <q-img :src="producto.imagen" height="220px" fit="cover" position="center" class="full-width product-img">
+                <div v-if="producto.etiqueta" class="absolute-top-right bg-transparent q-pa-xs">
+                  <q-chip color="amber-9" text-color="grey-1" size="sm" class="text-bold">
+                    {{ producto.etiqueta }}
+                  </q-chip>
+                </div>
+              </q-img>
 
-            <q-card-section class="full-width q-pb-none">
-              <div class="text-h6 text-weight-bold text-amber-1 playfair-font q-mb-xs">{{ producto.nombre }}</div>
-              <div class="text-body2 text-grey-4 font-light">{{ producto.descripcion }}</div>
-            </q-card-section>
+              <q-card-section class="q-pb-none">
+                <div class="text-h6 text-weight-bold text-amber-1 playfair-font q-mb-xs">{{ producto.nombre }}</div>
+                <div class="text-body2 text-grey-4 font-light">{{ producto.descripcion }}</div>
+              </q-card-section>
+            </div>
 
-            <q-card-actions class="full-width row items-center justify-between q-px-md q-pb-md q-pt-lg">
+            <q-card-actions class="row items-center justify-between q-px-md q-pb-md q-pt-lg">
               <div>
                 <div class="text-caption text-grey-5 uppercase">Precio COP</div>
                 <span class="text-h6 text-weight-bold text-amber-4">{{ producto.precio }}</span>
@@ -105,19 +129,19 @@
 
           <div v-if="productoSeleccionado.ingredientes && productoSeleccionado.ingredientes.length" class="q-mb-md">
             <div class="text-subtitle2 text-amber-2 text-bold q-mb-xs">
-              <q-icon name="list_alt" class="q-mr-xs" /> Ingredientes incluidos:
+              <q-icon name="stars" class="q-mr-xs" /> Ingredientes:
             </div>
             <div class="row q-gutter-xs">
-              <q-chip v-for="(ing, idx) in productoSeleccionado.ingredientes" :key="idx" outline color="amber-5"
+              <q-chip v-for="(item, idx) in productoSeleccionado.ingredientes" :key="idx" outline color="amber-5"
                 text-color="grey-2" size="sm" icon="check">
-                {{ ing }}
+                {{ item }}
               </q-chip>
             </div>
           </div>
 
           <div class="q-mt-md">
             <q-input v-model="instruccionesEspeciales" outlined dense dark color="amber-5"
-              label="Instrucciones especiales para cocina (opcional)" />
+              label="Notas para el pedido (p. ej. con mucho hielo, endulzante)" />
           </div>
         </q-card-section>
       </q-card>
@@ -126,11 +150,21 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 const modalDetalle = ref(false)
 const productoSeleccionado = ref({})
 const instruccionesEspeciales = ref('')
+
+const filtroActivo = ref('todos')
+const busqueda = ref('')
+
+const categoriasFiltro = [
+  { label: 'TODAS', value: 'todos', icon: 'local_bar' },
+  { label: 'COCTELES', value: 'Coctel', icon: 'liquor' },
+  { label: 'CERVEZAS', value: 'Cerveza', icon: 'sports_bar' },
+  { label: 'JUGOS & GASEOSAS', value: 'Sin Alcohol', icon: 'local_drink' }
+]
 
 const abrirDetalle = (producto) => {
   productoSeleccionado.value = producto
@@ -138,48 +172,64 @@ const abrirDetalle = (producto) => {
   modalDetalle.value = true
 }
 
-const chefBebida = {
-  nombre: "Limonada de Coco & Jengibre",
-  descripcion: "Extracción fresca de limones Tahití, reducción de leche de coco artesanal, toque de jengibre fresco procesado al momento y borde escarchado en flor de sal.",
+const destacado = {
+  nombre: "Limonada de Coco & Menta",
+  descripcion: "Leche de coco artesanal, zumo de limón criollo recién exprimido y hojas de menta maceradas servidas con hielo frappé.",
   precio: "$14.000",
   imagen: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=600&auto=format&fit=crop",
-  ingredientes: ["Limón Tahití", "Leche de coco artesanal", "Jengibre fresco", "Flor de sal"]
+  ingredientes: ["Leche de Coco", "Limón Criollo", "Menta Fresca", "Hielo Frappé"]
 }
 
-const bebidas = [
+const productos = [
   {
-    nombre: "Té Frío de Frutos del Bosque",
-    descripcion: "Infusión de té negro Ceylon con macerado orgánico de moras silvestre, frambuesas y toque de romero.",
-    precio: "$11.000",
-    etiqueta: "Muy Refrescante",
-    imagen: "https://images.unsplash.com/photo-1556881286-fc6915169721?q=80&w=500&auto=format&fit=crop",
-    ingredientes: ["Té negro Ceylon", "Macerado de moras", "Frambuesas frescas", "Romero"]
+    nombre: "Mojito Artesanal de Frutos Rojos",
+    descripcion: "Ron blanco premium, macerado de moras y fresas, menta fresca, limón y soda burbujeante.",
+    precio: "$25.000",
+    etiqueta: "Coctel",
+    imagen: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?q=80&w=500&auto=format&fit=crop",
+    ingredientes: ["Ron Blanco", "Moras & Fresas", "Menta", "Soda"]
   },
   {
-    nombre: "Jugo de Maracuyá & Albahaca",
-    descripcion: "Néctar concentrado de maracuyá de cultivo local batido con hojas frescas de albahaca y almíbar orgánico.",
-    precio: "$10.500",
-    etiqueta: "100% Natural",
-    imagen: "https://images.unsplash.com/photo-1613478223719-2ab802602423?q=80&w=500&auto=format&fit=crop",
-    ingredientes: ["Maracuyá natural", "Hojas de albahaca", "Almíbar orgánico", "Hielo picado"]
-  },
-  {
-    nombre: "Cerveza IPA de la Casa",
-    descripcion: "Cerveza artesanal de autor tipo India Pale Ale, notas cítricas a maracuyá y amargor equilibrado.",
-    precio: "$15.000",
-    etiqueta: "Artesanal",
+    nombre: "Cerveza IPA Artesanal",
+    descripcion: "Cerveza dorada de cuerpo medio, con amargor equilibrado e intensos aromas a lúpulo cítrico.",
+    precio: "$16.000",
+    etiqueta: "Cerveza",
     imagen: "https://images.unsplash.com/photo-1608270586620-248524c67de9?q=80&w=500&auto=format&fit=crop",
-    ingredientes: ["Lúpulos seleccionados", "Cebada malteada", "Notas cítricas de maracuyá"]
+    ingredientes: ["Lúpulo Cítrico", "Cebada Malteada", "5.8% Alc"]
   },
   {
-    nombre: "Agua Mineral San Pellegrino",
-    descripcion: "Agua de manantial natural ligeramente gasificada importada de los Alpes Italianos (500ml).",
-    precio: "$9.000",
-    etiqueta: "Importado",
-    imagen: "https://images.unsplash.com/photo-1560023907-5f339617ea30?q=80&w=500&auto=format&fit=crop",
-    ingredientes: ["Agua mineral con gas de manantial natural"]
+    nombre: "Soda Saborizada de Cítricos",
+    descripcion: "Combinación refrescante de maracuyá, naranja y toronja macerada en agua con gas.",
+    precio: "$12.000",
+    etiqueta: "Sin Alcohol",
+    imagen: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=500&auto=format&fit=crop",
+    ingredientes: ["Maracuyá", "Toronja", "Naranja", "Soda"]
+  },
+  {
+    nombre: "Gaseosa Personal 350ml",
+    descripcion: "Coca-Cola, Sprite o Cuatro bien fría servida con vaso con hielo y rodaja de limón.",
+    precio: "$6.000",
+    etiqueta: "Sin Alcohol",
+    imagen: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=500&auto=format&fit=crop",
+    ingredientes: ["350ml", "Servida helada"]
   }
 ]
+
+const productosFiltrados = computed(() => {
+  return productos.filter(prod => {
+    const texto = busqueda.value.toLowerCase().trim()
+    const coincideTexto = !texto ||
+      prod.nombre.toLowerCase().includes(texto) ||
+      prod.descripcion.toLowerCase().includes(texto)
+
+    let coincideFiltro = true
+    if (filtroActivo.value !== 'todos') {
+      coincideFiltro = prod.etiqueta === filtroActivo.value
+    }
+
+    return coincideTexto && coincideFiltro
+  })
+})
 </script>
 
 <style scoped>
@@ -234,7 +284,7 @@ const bebidas = [
 .card-gourmet:hover {
   transform: translateY(-6px);
   border-color: #d4af37;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 12px 24px rgba(212, 175, 55, 0.2);
 }
 
 .uppercase {
@@ -242,11 +292,79 @@ const bebidas = [
   font-size: 0.7rem;
 }
 
+.product-img {
+  height: 220px !important;
+  max-height: 220px !important;
+}
+
+:deep(.product-img .q-img__image) {
+  background-size: cover !important;
+  background-position: center center !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  height: 220px !important;
+}
+
+:deep(.chef-img .q-img__image) {
+  background-size: cover !important;
+  background-position: center center !important;
+  object-fit: cover !important;
+}
+
 :deep(.modal-img .q-img__image) {
   object-fit: contain !important;
   object-position: center !important;
   background-size: contain !important;
   background-position: center !important;
+}
+
+.filter-btn {
+  color: #ffffff !important;
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.5px;
+  border-radius: 20px;
+  padding: 4px 16px;
+  transition: all 0.2s ease-in-out;
+}
+
+.filter-btn:hover {
+  background: rgba(255, 193, 7, 0.15) !important;
+  color: #ffc107 !important;
+}
+
+.filter-btn-active {
+  background-color: #ffc107 !important;
+  color: #121212 !important;
+  border-radius: 20px;
+}
+
+.search-container {
+  max-width: 380px;
+}
+
+.search-input :deep(.q-field__inner) {
+  border-radius: 6px;
+}
+
+.search-input :deep(.q-field__control) {
+  background-color: #2b2b2b !important;
+  border-radius: 6px;
+  border: 1px solid #4f4f4f;
+}
+
+.search-input :deep(.q-field__control:before),
+.search-input :deep(.q-field__control:after) {
+  display: none;
+}
+
+.search-input :deep(input) {
+  color: #e0e0e0 !important;
+  font-size: 0.9rem;
+}
+
+.search-input :deep(input::placeholder) {
+  color: #9e9e9e !important;
 }
 
 @media (max-width: 1023px) {
