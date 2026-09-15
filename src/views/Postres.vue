@@ -40,8 +40,6 @@
                 </div>
                 <div class="row items-center q-gutter-sm">
                   <q-btn flat round color="amber-5" icon="visibility" @click="abrirDetalle(destacado)" />
-                  <q-btn color="amber-7" text-color="grey-10" icon="shopping_bag" label="Pedir Ahora"
-                    class="text-bold q-px-md" unelevated />
                 </div>
               </div>
             </q-card-section>
@@ -149,7 +147,6 @@
     </q-dialog>
   </q-page>
 </template>
-
 <script setup>
 import { ref, computed } from 'vue'
 
