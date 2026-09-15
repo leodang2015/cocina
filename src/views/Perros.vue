@@ -187,7 +187,7 @@ const productos = [
     descripcion: "Salchicha premium, carne molida especiada estilo chili, queso cheddar derretido, jalapeños en rodajas y guacamole fresco.",
     precio: "$22.000",
     etiqueta: "Especial",
-    imagen: "https://images.unsplash.com/photo-1612392062631-9bde0883d614?q=80&w=500&auto=format&fit=crop",
+    imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-6LgXmDvHMchQ2NZk0vfg0UbX532ZTNxlnUgzK78Viw&s=10",
     ingredientes: ["Chili con Carne", "Cheddar", "Jalapeños", "Guacamole"]
   },
   {
