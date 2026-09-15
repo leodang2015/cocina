@@ -52,8 +52,10 @@
         <div class="gold-line q-mx-auto q-mt-xs"></div>
       </div>
 
+      <!-- Contenedor unificado para filtros, buscador y grid alineados al ras -->
       <div class="q-mb-lg q-mx-auto" style="max-width: 1400px;">
-        <div class="row items-center justify-between q-gutter-y-sm">
+        <!-- Filtros y Búsqueda -->
+        <div class="row items-center justify-between q-gutter-y-sm q-mb-md">
           <div class="row items-center q-gutter-xs">
             <q-btn v-for="cat in categoriasFiltro" :key="cat.value" :label="cat.label" :icon="cat.icon"
               :unelevated="filtroActivo === cat.value" :flat="filtroActivo !== cat.value"
@@ -72,78 +74,76 @@
             </q-input>
           </div>
         </div>
-      </div>
 
-      <!-- Grid forzada exactamente a 4 columnas sin espacios laterales excesivos -->
-      <div class="products-grid-4">
-        <q-card v-for="(producto, index) in productosFiltrados" :key="index"
-          class="card-gourmet bg-grey-9 text-grey-2 border-grey border-radius-md overflow-hidden">
-          <div class="card-media">
-            <q-img :src="producto.imagen" height="190px" fit="cover" class="full-width product-img">
-              <div v-if="producto.etiqueta" class="absolute-top-right bg-transparent q-pa-xs">
-                <q-chip color="amber-9" text-color="grey-1" size="sm" class="text-bold">
-                  {{ producto.etiqueta }}
-                </q-chip>
-              </div>
-            </q-img>
-          </div>
+        <div class="products-grid-4">
+          <q-card v-for="(producto, index) in productosFiltrados" :key="index"
+            class="card-narrow bg-grey-9 text-grey-2 border-grey border-radius-md overflow-hidden flex column justify-between">
 
-          <q-card-section class="card-body q-pa-sm">
-            <div class="text-subtitle1 text-weight-bold text-amber-1 playfair-font q-mb-xs title-clamp">{{
-              producto.nombre }}
-            </div>
-            <div class="text-caption text-grey-4 font-light desc-clamp">{{ producto.descripcion }}</div>
-          </q-card-section>
-
-          <q-card-actions class="card-footer row items-center justify-between q-px-sm q-pb-sm q-pt-none">
             <div>
-              <div class="text-caption text-grey-5 uppercase" style="font-size: 0.65rem;">Precio COP</div>
-              <span class="text-subtitle1 text-weight-bold text-amber-4">{{ producto.precio }}</span>
+              <q-img :src="producto.imagen" height="180px" fit="cover" class="full-width product-img">
+                <div v-if="producto.etiqueta" class="absolute-top-right bg-transparent q-pa-xs">
+                  <q-chip color="amber-9" text-color="grey-1" size="xs" class="text-bold q-ma-none">
+                    {{ producto.etiqueta }}
+                  </q-chip>
+                </div>
+              </q-img>
+
+              <q-card-section class="q-pa-sm">
+                <div class="text-subtitle2 text-weight-bold text-amber-1 playfair-font title-clamp">{{ producto.nombre
+                  }}</div>
+                <div class="text-caption text-grey-4 font-light desc-clamp q-mt-xs">{{ producto.descripcion }}</div>
+              </q-card-section>
             </div>
-            <q-btn flat round dense color="amber-5" icon="visibility" @click="abrirDetalle(producto)" />
-          </q-card-actions>
-        </q-card>
+
+            <q-card-actions class="row items-center justify-between q-px-sm q-pb-sm q-pt-none">
+              <div>
+                <div class="text-caption text-grey-5 uppercase" style="font-size: 0.65rem;">Precio COP</div>
+                <span class="text-subtitle1 text-weight-bold text-amber-4">{{ producto.precio }}</span>
+              </div>
+              <q-btn flat round dense color="amber-5" icon="visibility" @click="abrirDetalle(producto)" />
+            </q-card-actions>
+
+          </q-card>
+        </div>
       </div>
     </div>
 
     <q-dialog v-model="modalDetalle">
-      <q-card class="bg-grey-9 text-grey-2 border-gold border-radius-lg overflow-hidden"
-        style="width: 500px; max-width: 90vw;">
+      <q-card class="bg-grey-9 text-grey-2 border-gold border-radius-lg overflow-hidden modal-amplio">
         <div class="relative-position bg-black">
-          <q-img :src="productoSeleccionado.imagen" height="260px" fit="contain" class="full-width modal-img">
-            <div v-if="productoSeleccionado.etiqueta" class="absolute-top-left bg-transparent q-pa-xs">
-              <q-chip color="amber-9" text-color="grey-1" size="sm" class="text-bold">
+          <q-img :src="productoSeleccionado.imagen" height="360px" fit="cover" class="full-width modal-img">
+            <div v-if="productoSeleccionado.etiqueta" class="absolute-top-left bg-transparent q-pa-sm">
+              <q-chip color="amber-9" text-color="grey-1" size="md" class="text-bold">
                 ★ {{ productoSeleccionado.etiqueta }}
               </q-chip>
             </div>
           </q-img>
-          <q-btn icon="close" flat round dense v-close-popup color="white" class="absolute-top-right q-ma-xs"
+          <q-btn icon="close" flat round dense v-close-popup color="white" class="absolute-top-right q-ma-sm"
             style="background: rgba(0,0,0,0.6);" />
         </div>
 
-        <q-card-section class="q-pt-md">
-          <div class="row items-center justify-between q-mb-xs">
-            <div class="text-h5 text-weight-bold text-amber-1 playfair-font">{{ productoSeleccionado.nombre }}</div>
-            <div class="text-h5 text-weight-bolder text-amber-4">{{ productoSeleccionado.precio }}</div>
+        <q-card-section class="q-pa-lg">
+          <div class="row items-center justify-between q-mb-sm">
+            <div class="text-h4 text-weight-bold text-amber-1 playfair-font">{{ productoSeleccionado.nombre }}</div>
+            <div class="text-h4 text-weight-bolder text-amber-4">{{ productoSeleccionado.precio }}</div>
           </div>
 
-          <p class="text-body2 text-grey-4 font-light q-mb-md">{{ productoSeleccionado.descripcion }}</p>
+          <q-separator color="amber-9" class="q-mb-md" />
 
-          <div v-if="productoSeleccionado.ingredientes && productoSeleccionado.ingredientes.length" class="q-mb-md">
-            <div class="text-subtitle2 text-amber-2 text-bold q-mb-xs">
-              <q-icon name="stars" class="q-mr-xs" /> Ingredientes:
+          <div class="text-subtitle1 text-grey-3 font-light q-mb-lg leading-relaxed">
+            {{ productoSeleccionado.descripcion }}
+          </div>
+
+          <div v-if="productoSeleccionado.ingredientes && productoSeleccionado.ingredientes.length" class="q-mb-sm">
+            <div class="text-subtitle1 text-amber-3 text-bold q-mb-sm flex items-center">
+              <q-icon name="stars" color="amber-5" size="20px" class="q-mr-xs" /> Ingredientes Seleccionados:
             </div>
-            <div class="row q-gutter-xs">
+            <div class="row q-gutter-sm">
               <q-chip v-for="(item, idx) in productoSeleccionado.ingredientes" :key="idx" outline color="amber-5"
-                text-color="grey-2" size="sm" icon="check">
+                text-color="grey-2" size="md" icon="check">
                 {{ item }}
               </q-chip>
             </div>
-          </div>
-
-          <div class="q-mt-md">
-            <q-input v-model="instruccionesEspeciales" outlined dense dark color="amber-5"
-              label="Notas para el pedido (p. ej. con mucho hielo, endulzante)" />
           </div>
         </q-card-section>
       </q-card>
@@ -156,7 +156,6 @@ import { ref, computed } from 'vue'
 
 const modalDetalle = ref(false)
 const productoSeleccionado = ref({})
-const instruccionesEspeciales = ref('')
 
 const filtroActivo = ref('todos')
 const busqueda = ref('')
@@ -170,50 +169,49 @@ const categoriasFiltro = [
 
 const abrirDetalle = (producto) => {
   productoSeleccionado.value = producto
-  instruccionesEspeciales.value = ''
   modalDetalle.value = true
 }
 
 const destacado = {
   nombre: "Limonada de Coco & Menta",
-  descripcion: "Leche de coco artesanal, zumo de limón criollo recién exprimido y hojas de menta maceradas servidas con hielo frappé.",
+  descripcion: "Leche de coco artesanal extraída diariamente en nuestra cocina, batida a la perfección con zumo fresco de limón criollo recién exprimido, un toque de jarabe de caña pura y macerado de hojas de menta fresca. Servida con hielo frappé en copa alta artesanal.",
   precio: "$14.000",
   imagen: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=600&auto=format&fit=crop",
-  ingredientes: ["Leche de Coco", "Limón Criollo", "Menta Fresca", "Hielo Frappé"]
+  ingredientes: ["Leche de Coco Artesanal", "Limón Criollo Exprimido", "Hojas de Menta Maceradas", "Jarabe de Caña", "Hielo Frappé"]
 }
 
 const productos = [
   {
     nombre: "Mojito Artesanal de Frutos Rojos",
-    descripcion: "Ron blanco premium, macerado de moras y fresas, menta fresca, limón y soda burbujeante.",
+    descripcion: "Una reinterpretación caribeña preparada con ron blanco de reserva infusionado, infusión concentrada de moras silvestre y fresas maduras maceradas al momento, menta recién cortada del huerto, zumo de limón verde y agua con gas burbujeante para dar frescura perfecta.",
     precio: "$25.000",
     etiqueta: "Coctel",
     imagen: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?q=80&w=500&auto=format&fit=crop",
-    ingredientes: ["Ron Blanco", "Moras & Fresas", "Menta", "Soda"]
+    ingredientes: ["Ron Blanco Reserva", "Macerado de Moras & Fresas", "Menta del Huerto", "Zumo de Limón Verde", "Soda Gasificada"]
   },
   {
     nombre: "Cerveza IPA Artesanal",
-    descripcion: "Cerveza dorada de cuerpo medio, con amargor equilibrado e intensos aromas a lúpulo cítrico.",
+    descripcion: "Cerveza de elaboración local dorada e intensa, procesada con triples lúpulos aromáticos seleccionados a mano. Posee un cuerpo medio robusto con un perfil equilibrado de amargor frutal y notas cítricas persistentes en el paladar.",
     precio: "$16.000",
     etiqueta: "Cerveza",
     imagen: "https://images.unsplash.com/photo-1608270586620-248524c67de9?q=80&w=500&auto=format&fit=crop",
-    ingredientes: ["Lúpulo Cítrico", "Cebada Malteada", "5.8% Alc"]
+    ingredientes: ["Lúpulos Cítricos Seleccionados", "Malta Dorada Especial", "Agua Manantial", "5.8% Vol. Alcohol"]
   },
   {
     nombre: "Soda Saborizada de Cítricos",
-    descripcion: "Combinación refrescante de maracuyá, naranja y toronja macerada en agua con gas.",
+    descripcion: "Mezcla refrescante sin alcohol elaborada a base de néctar de maracuyá maduro, extracto natural de toronja rosada y rodajas de naranja fresca. Finalizada con agua de manantial con finas burbujas y decoración de hojas de menta.",
     precio: "$12.000",
     etiqueta: "Sin Alcohol",
     imagen: "https://thumbs.dreamstime.com/b/fizz-de-fruta-la-pasi%C3%B3n-tropical-servida-con-c%C3%ADtricos-frescos-ai-generativo-una-refrescante-bebida-se-presenta-en-un-vaso-lleno-390587915.jpg",
-    ingredientes: ["Maracuyá", "Toronja", "Naranja", "Soda"]
+    ingredientes: ["Néctar de Maracuyá", "Extracto de Toronja Rosada", "Rodajas de Naranja Criolla", "Soda Burbujeante"]
   },
   {
     nombre: "Gaseosa Personal 350ml",
-    descripcion: "Coca-Cola, Sprite o Cuatro bien fría servida con vaso con hielo y rodaja de limón.",
+    descripcion: "Refresco clásico embotellado (disponible en variaciones Coca-Cola, Sprite o Cuatro) servido a temperatura bajo cero en vaso de cristal labrado, acompañado con hielo en cubos de agua purificada y una rodaja de limón fresco.",
     precio: "$6.000",
     etiqueta: "Sin Alcohol",
     imagen: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=500&auto=format&fit=crop",
-    ingredientes: ["350ml", "Servida helada"]
+    ingredientes: ["Presentación 350ml Glass", "Hielo Purificado", "Rodaja de Limón"]
   }
 ]
 
@@ -237,6 +235,16 @@ const productosFiltrados = computed(() => {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,400&display=swap');
 
+/* Tamaño ampliado del modal */
+.modal-amplio {
+  width: 700px !important;
+  max-width: 95vw !important;
+}
+
+.leading-relaxed {
+  line-height: 1.6;
+}
+
 /* Grid fija de 4 columnas */
 .products-grid-4 {
   display: grid;
@@ -245,22 +253,16 @@ const productosFiltrados = computed(() => {
   width: 100%;
 }
 
-.card-gourmet {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+.card-narrow {
+  width: 100%;
   height: 100%;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.card-gourmet:hover {
+.card-narrow:hover {
   transform: translateY(-4px);
   border-color: #d4af37;
   box-shadow: 0 8px 16px rgba(212, 175, 55, 0.2);
-}
-
-.card-body {
-  flex-grow: 1;
 }
 
 .title-clamp {
@@ -268,7 +270,8 @@ const productosFiltrados = computed(() => {
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
+  line-height: 1.2;
 }
 
 .desc-clamp {
@@ -276,7 +279,8 @@ const productosFiltrados = computed(() => {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  line-height: 1.3;
+  font-size: 0.75rem;
+  line-height: 1.25;
 }
 
 .playfair-font {
@@ -326,7 +330,7 @@ const productosFiltrados = computed(() => {
 }
 
 .product-img {
-  height: 190px !important;
+  height: 180px !important;
 }
 
 :deep(.product-img .q-img__image) {
@@ -334,7 +338,7 @@ const productosFiltrados = computed(() => {
   background-position: center center !important;
   object-fit: cover !important;
   object-position: center !important;
-  height: 190px !important;
+  height: 180px !important;
 }
 
 :deep(.chef-img .q-img__image) {
@@ -344,10 +348,9 @@ const productosFiltrados = computed(() => {
 }
 
 :deep(.modal-img .q-img__image) {
-  object-fit: contain !important;
+  object-fit: cover !important;
   object-position: center !important;
-  background-size: contain !important;
-  background-position: center !important;
+  background-size: cover !important;
 }
 
 .filter-btn {
@@ -399,18 +402,14 @@ const productosFiltrados = computed(() => {
   color: #9e9e9e !important;
 }
 
-/* Responsivo para móviles y tabletas */
-@media (max-width: 1024px) {
+/* Responsivo */
+@media (max-width: 900px) {
   .products-grid-4 {
     grid-template-columns: repeat(2, 1fr);
   }
-
-  .border-responsive {
-    flex-direction: column;
-  }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 500px) {
   .products-grid-4 {
     grid-template-columns: 1fr;
   }
