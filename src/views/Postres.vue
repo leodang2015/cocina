@@ -202,7 +202,15 @@ const productos = [
     etiqueta: "Chocolate",
     imagen: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=500&auto=format&fit=crop",
     ingredientes: ["Brownie Cacao", "Nueces", "Caramelo Salado", "Helado"]
-  }
+  },
+  {
+  "nombre": "Volcán de Arequipe con Helado",
+  "descripcion": "Pastel esponjoso con centro líquido de arequipe artesanal, servido caliente con helado de crema, un toque de crumble de galleta y frutos rojos frescos.",
+  "precio": "$16.500",
+  "etiqueta": "Tradicional",
+  "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRko95eXV_7w2vJ7QjNSAUHcQ34wNhRtKuimNzfqS5-pTBzHw1m",
+  "ingredientes": ["Volcán de Arequipe", "Helado de Crema", "Crumble de Galleta", "Frutos Rojos"]
+}
 ]
 
 const productosFiltrados = computed(() => {
