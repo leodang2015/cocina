@@ -1,6 +1,5 @@
 <template>
   <q-page class="bg-grey-10 text-grey-2 q-pb-xl">
-    <!-- Banner Principal -->
     <div class="banner-container relative-position">
       <q-img src="https://images.unsplash.com/photo-1619740455993-9e612b1af08a?q=80&w=1000&auto=format&fit=crop"
         height="260px" fit="cover">
@@ -16,9 +15,8 @@
       </q-img>
     </div>
 
-    <div class="container q-mx-auto q-px-md q-mt-xl" style="max-width: 1100px;">
-      <!-- Sección Destacada / Insignia -->
-      <div class="q-mb-xl">
+    <div class="full-width q-px-sm q-mt-xl">
+      <div class="q-mb-xl q-mx-auto" style="max-width: 1400px;">
         <div class="text-center q-mb-lg">
           <q-icon name="hot_dog" color="amber-5" size="28px" />
           <div class="text-caption text-uppercase letter-spacing-2 text-amber-5 text-bold">El Más Aclamado</div>
@@ -48,97 +46,98 @@
         </q-card>
       </div>
 
-      <!-- Título de Catálogo -->
       <div class="text-center q-mb-lg q-pt-md">
         <h2 class="text-h5 text-weight-bold text-amber-2 playfair-font q-my-none">NUESTROS PERROS CALIENTES</h2>
         <div class="gold-line q-mx-auto q-mt-xs"></div>
       </div>
 
-      <!-- Filtros y Búsqueda -->
-      <div class="q-mb-lg">
-        <div class="row items-center q-gutter-sm q-mb-md">
-          <q-btn v-for="cat in categoriasFiltro" :key="cat.value" :label="cat.label" :icon="cat.icon"
-            :unelevated="filtroActivo === cat.value" :flat="filtroActivo !== cat.value"
-            :class="['filter-btn', { 'filter-btn-active': filtroActivo === cat.value }]"
-            @click="filtroActivo = cat.value" no-caps />
+      <div class="q-mb-lg q-mx-auto" style="max-width: 1400px;">
+        <div class="row items-center justify-between q-gutter-y-sm q-mb-md">
+          <div class="row items-center q-gutter-xs">
+            <q-btn v-for="cat in categoriasFiltro" :key="cat.value" :label="cat.label" :icon="cat.icon"
+              :unelevated="filtroActivo === cat.value" :flat="filtroActivo !== cat.value"
+              :class="['filter-btn', { 'filter-btn-active': filtroActivo === cat.value }]"
+              @click="filtroActivo = cat.value" no-caps />
+          </div>
+
+          <div class="search-container">
+            <q-input v-model="busqueda" placeholder="Buscar por ingrediente o nombre..." dense dark outlined
+              class="search-input">
+              <template v-slot:prepend>
+                <q-icon name="search" color="amber-5" />
+              </template>
+              <template v-slot:append v-if="busqueda">
+                <q-icon name="close" class="cursor-pointer" @click="busqueda = ''" />
+              </template>
+            </q-input>
+          </div>
         </div>
 
-        <div class="search-container">
-          <q-input v-model="busqueda" placeholder="Buscar por ingrediente o nombre..." dense dark outlined
-            class="search-input">
-            <template v-slot:prepend>
-              <q-icon name="search" color="amber-5" />
-            </template>
-            <template v-slot:append v-if="busqueda">
-              <q-icon name="close" class="cursor-pointer" @click="busqueda = ''" />
-            </template>
-          </q-input>
-        </div>
-      </div>
+        <div class="products-grid-4">
+          <q-card v-for="(producto, index) in productosFiltrados" :key="index"
+            class="card-narrow bg-grey-9 text-grey-2 border-grey border-radius-md overflow-hidden flex column justify-between">
 
-      <!-- Grid de Productos -->
-      <div class="row q-col-gutter-lg items-stretch">
-        <div v-for="(producto, index) in productosFiltrados" :key="index" class="col-12 col-sm-6 col-md-4 flex">
-          <q-card
-            class="card-gourmet bg-grey-9 text-grey-2 full-height full-width border-grey border-radius-md overflow-hidden flex column justify-between">
             <div>
-              <q-img :src="producto.imagen" height="220px" fit="cover" position="center" class="full-width product-img">
+              <q-img :src="producto.imagen" height="180px" fit="cover" class="full-width product-img">
                 <div v-if="producto.etiqueta" class="absolute-top-right bg-transparent q-pa-xs">
-                  <q-chip color="amber-9" text-color="grey-1" size="sm" class="text-bold">
+                  <q-chip color="amber-9" text-color="grey-1" size="xs" class="text-bold q-ma-none">
                     {{ producto.etiqueta }}
                   </q-chip>
                 </div>
               </q-img>
 
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 text-weight-bold text-amber-1 playfair-font q-mb-xs">{{ producto.nombre }}</div>
-                <div class="text-body2 text-grey-4 font-light">{{ producto.descripcion }}</div>
+              <q-card-section class="q-pa-sm">
+                <div class="text-subtitle2 text-weight-bold text-amber-1 playfair-font title-clamp">{{ producto.nombre }}</div>
+                <div class="text-caption text-grey-4 font-light desc-clamp q-mt-xs">{{ producto.descripcion }}</div>
               </q-card-section>
             </div>
 
-            <q-card-actions class="row items-center justify-between q-px-md q-pb-md q-pt-lg">
+            <q-card-actions class="row items-center justify-between q-px-sm q-pb-sm q-pt-none">
               <div>
-                <div class="text-caption text-grey-5 uppercase">Precio COP</div>
-                <span class="text-h6 text-weight-bold text-amber-4">{{ producto.precio }}</span>
+                <div class="text-caption text-grey-5 uppercase" style="font-size: 0.65rem;">Precio COP</div>
+                <span class="text-subtitle1 text-weight-bold text-amber-4">{{ producto.precio }}</span>
               </div>
-              <q-btn flat round color="amber-5" icon="visibility" @click="abrirDetalle(producto)" />
+              <q-btn flat round dense color="amber-5" icon="visibility" @click="abrirDetalle(producto)" />
             </q-card-actions>
+
           </q-card>
         </div>
       </div>
     </div>
 
-    <!-- Modal Detalle del Producto -->
     <q-dialog v-model="modalDetalle">
-      <q-card class="bg-grey-9 text-grey-2 border-gold border-radius-lg overflow-hidden"
-        style="width: 500px; max-width: 90vw;">
+      <q-card class="bg-grey-9 text-grey-2 border-gold border-radius-lg overflow-hidden modal-amplio">
         <div class="relative-position bg-black">
-          <q-img :src="productoSeleccionado.imagen" height="260px" fit="contain" class="full-width modal-img">
-            <div v-if="productoSeleccionado.etiqueta" class="absolute-top-left bg-transparent q-pa-xs">
-              <q-chip color="amber-9" text-color="grey-1" size="sm" class="text-bold">
+          <q-img :src="productoSeleccionado.imagen" height="360px" fit="cover" class="full-width modal-img">
+            <div v-if="productoSeleccionado.etiqueta" class="absolute-top-left bg-transparent q-pa-sm">
+              <q-chip color="amber-9" text-color="grey-1" size="md" class="text-bold">
                 ★ {{ productoSeleccionado.etiqueta }}
               </q-chip>
             </div>
           </q-img>
-          <q-btn icon="close" flat round dense v-close-popup color="white" class="absolute-top-right q-ma-xs"
+          <q-btn icon="close" flat round dense v-close-popup color="white" class="absolute-top-right q-ma-sm"
             style="background: rgba(0,0,0,0.6);" />
         </div>
 
-        <q-card-section class="q-pt-md">
-          <div class="row items-center justify-between q-mb-xs">
-            <div class="text-h5 text-weight-bold text-amber-1 playfair-font">{{ productoSeleccionado.nombre }}</div>
-            <div class="text-h5 text-weight-bolder text-amber-4">{{ productoSeleccionado.precio }}</div>
+        <q-card-section class="q-pa-lg">
+          <div class="row items-center justify-between q-mb-sm">
+            <div class="text-h4 text-weight-bold text-amber-1 playfair-font">{{ productoSeleccionado.nombre }}</div>
+            <div class="text-h4 text-weight-bolder text-amber-4">{{ productoSeleccionado.precio }}</div>
           </div>
 
-          <p class="text-body2 text-grey-4 font-light q-mb-md">{{ productoSeleccionado.descripcion }}</p>
+          <q-separator color="amber-9" class="q-mb-md" />
 
-          <div v-if="productoSeleccionado.ingredientes && productoSeleccionado.ingredientes.length" class="q-mb-md">
-            <div class="text-subtitle2 text-amber-2 text-bold q-mb-xs">
-              <q-icon name="stars" class="q-mr-xs" /> Ingredientes:
+          <div class="text-subtitle1 text-grey-3 font-light q-mb-lg leading-relaxed">
+            {{ productoSeleccionado.descripcion }}
+          </div>
+
+          <div v-if="productoSeleccionado.ingredientes && productoSeleccionado.ingredientes.length" class="q-mb-sm">
+            <div class="text-subtitle1 text-amber-3 text-bold q-mb-sm flex items-center">
+              <q-icon name="stars" color="amber-5" size="20px" class="q-mr-xs" /> Ingredientes Seleccionados:
             </div>
-            <div class="row q-gutter-xs">
+            <div class="row q-gutter-sm">
               <q-chip v-for="(item, idx) in productoSeleccionado.ingredientes" :key="idx" outline color="amber-5"
-                text-color="grey-2" size="sm" icon="check">
+                text-color="grey-2" size="md" icon="check">
                 {{ item }}
               </q-chip>
             </div>
@@ -240,6 +239,52 @@ const productosFiltrados = computed(() => {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,400&display=swap');
 
+.modal-amplio {
+  width: 700px !important;
+  max-width: 95vw !important;
+}
+
+.leading-relaxed {
+  line-height: 1.6;
+}
+
+.products-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  width: 100%;
+}
+
+.card-narrow {
+  width: 100%;
+  height: 100%;
+  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.card-narrow:hover {
+  transform: translateY(-4px);
+  border-color: #d4af37;
+  box-shadow: 0 8px 16px rgba(212, 175, 55, 0.2);
+}
+
+.title-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 0.85rem;
+  line-height: 1.2;
+}
+
+.desc-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 0.75rem;
+  line-height: 1.25;
+}
+
 .playfair-font {
   font-family: 'Playfair Display', Georgia, serif;
 }
@@ -271,7 +316,7 @@ const productosFiltrados = computed(() => {
 }
 
 .border-radius-md {
-  border-radius: 12px;
+  border-radius: 8px;
 }
 
 .font-light {
@@ -282,24 +327,12 @@ const productosFiltrados = computed(() => {
   font-style: italic;
 }
 
-.card-gourmet {
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.card-gourmet:hover {
-  transform: translateY(-6px);
-  border-color: #d4af37;
-  box-shadow: 0 12px 24px rgba(212, 175, 55, 0.2);
-}
-
 .uppercase {
   text-transform: uppercase;
-  font-size: 0.7rem;
 }
 
 .product-img {
-  height: 220px !important;
-  max-height: 220px !important;
+  height: 180px !important;
 }
 
 :deep(.product-img .q-img__image) {
@@ -307,7 +340,7 @@ const productosFiltrados = computed(() => {
   background-position: center center !important;
   object-fit: cover !important;
   object-position: center !important;
-  height: 220px !important;
+  height: 180px !important;
 }
 
 :deep(.chef-img .q-img__image) {
@@ -317,19 +350,18 @@ const productosFiltrados = computed(() => {
 }
 
 :deep(.modal-img .q-img__image) {
-  object-fit: contain !important;
+  object-fit: cover !important;
   object-position: center !important;
-  background-size: contain !important;
-  background-position: center !important;
+  background-size: cover !important;
 }
 
 .filter-btn {
   color: #ffffff !important;
-  font-weight: 700;
-  font-size: 0.82rem;
+  font-weight: 600;
+  font-size: 0.78rem;
   letter-spacing: 0.5px;
-  border-radius: 20px;
-  padding: 4px 16px;
+  border-radius: 16px;
+  padding: 2px 10px;
   transition: all 0.2s ease-in-out;
 }
 
@@ -341,11 +373,11 @@ const productosFiltrados = computed(() => {
 .filter-btn-active {
   background-color: #ffc107 !important;
   color: #121212 !important;
-  border-radius: 20px;
+  border-radius: 16px;
 }
 
 .search-container {
-  max-width: 380px;
+  width: 280px;
 }
 
 .search-input :deep(.q-field__inner) {
@@ -365,16 +397,22 @@ const productosFiltrados = computed(() => {
 
 .search-input :deep(input) {
   color: #e0e0e0 !important;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 .search-input :deep(input::placeholder) {
   color: #9e9e9e !important;
 }
 
-@media (max-width: 1023px) {
-  .border-responsive {
-    flex-direction: column;
+@media (max-width: 900px) {
+  .products-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .products-grid-4 {
+    grid-template-columns: 1fr;
   }
 }
 </style>
