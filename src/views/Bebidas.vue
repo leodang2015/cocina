@@ -1,12 +1,14 @@
 <template>
   <q-page class="bg-grey-10 text-grey-2 q-pb-xl">
     <div class="banner-container relative-position">
-      <q-img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?q=80&w=1200&auto=format&fit=crop" height="260px" fit="cover">
+      <q-img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?q=80&w=1200&auto=format&fit=crop"
+        height="260px" fit="cover">
         <div class="absolute-full flex flex-center bg-overlay">
           <div class="text-center text-amber-2">
             <div class="text-overline letter-spacing-2 text-amber-5">Mixología & Maridaje</div>
             <h1 class="text-h3 text-weight-bolder q-my-xs playfair-font">Elixir & Refrescos</h1>
-            <p class="text-subtitle1 text-grey-4 font-italic">Infusiones de botánicos, frutas de temporada y cócteles artesanales sin alcohol.</p>
+            <p class="text-subtitle1 text-grey-4 font-italic">Infusiones de botánicos, frutas de temporada y cócteles
+              artesanales sin alcohol.</p>
           </div>
         </div>
       </q-img>
@@ -35,7 +37,8 @@
                 </div>
                 <div class="row items-center q-gutter-sm">
                   <q-btn flat round color="amber-5" icon="visibility" @click="abrirDetalle(chefBebida)" />
-                  <q-btn color="amber-7" text-color="grey-10" icon="local_drink" label="Pedir Coctel" class="text-bold q-px-md" unelevated />
+                  <q-btn color="amber-7" text-color="grey-10" icon="local_drink" label="Pedir Coctel"
+                    class="text-bold q-px-md" unelevated />
                 </div>
               </div>
             </q-card-section>
@@ -50,7 +53,8 @@
 
       <div class="row q-col-gutter-lg">
         <div v-for="(producto, index) in bebidas" :key="index" class="col-12 col-sm-6 col-md-4">
-          <q-card class="card-gourmet bg-grey-9 text-grey-2 full-height flex flex-center column justify-between border-grey border-radius-md overflow-hidden">
+          <q-card
+            class="card-gourmet bg-grey-9 text-grey-2 full-height flex flex-center column justify-between border-grey border-radius-md overflow-hidden">
             <q-img :src="producto.imagen" height="220px" fit="cover">
               <div v-if="producto.etiqueta" class="absolute-top-right bg-transparent q-pa-xs">
                 <q-chip color="amber-9" text-color="grey-1" size="sm" class="text-bold">
@@ -77,7 +81,8 @@
     </div>
 
     <q-dialog v-model="modalDetalle">
-      <q-card class="bg-grey-9 text-grey-2 border-gold border-radius-lg overflow-hidden" style="width: 500px; max-width: 90vw;">
+      <q-card class="bg-grey-9 text-grey-2 border-gold border-radius-lg overflow-hidden"
+        style="width: 500px; max-width: 90vw;">
         <div class="relative-position bg-black">
           <q-img :src="productoSeleccionado.imagen" height="260px" fit="contain" class="full-width modal-img">
             <div v-if="productoSeleccionado.etiqueta" class="absolute-top-left bg-transparent q-pa-xs">
@@ -86,7 +91,8 @@
               </q-chip>
             </div>
           </q-img>
-          <q-btn icon="close" flat round dense v-close-popup color="white" class="absolute-top-right q-ma-xs" style="background: rgba(0,0,0,0.6);" />
+          <q-btn icon="close" flat round dense v-close-popup color="white" class="absolute-top-right q-ma-xs"
+            style="background: rgba(0,0,0,0.6);" />
         </div>
 
         <q-card-section class="q-pt-md">
@@ -102,29 +108,16 @@
               <q-icon name="list_alt" class="q-mr-xs" /> Ingredientes incluidos:
             </div>
             <div class="row q-gutter-xs">
-              <q-chip 
-                v-for="(ing, idx) in productoSeleccionado.ingredientes" 
-                :key="idx" 
-                outline 
-                color="amber-5" 
-                text-color="grey-2" 
-                size="sm" 
-                icon="check"
-              >
+              <q-chip v-for="(ing, idx) in productoSeleccionado.ingredientes" :key="idx" outline color="amber-5"
+                text-color="grey-2" size="sm" icon="check">
                 {{ ing }}
               </q-chip>
             </div>
           </div>
 
           <div class="q-mt-md">
-            <q-input 
-              v-model="instruccionesEspeciales" 
-              outlined 
-              dense 
-              dark 
-              color="amber-5" 
-              label="Instrucciones especiales para cocina (opcional)" 
-            />
+            <q-input v-model="instruccionesEspeciales" outlined dense dark color="amber-5"
+              label="Instrucciones especiales para cocina (opcional)" />
           </div>
         </q-card-section>
       </q-card>
@@ -195,53 +188,67 @@ const bebidas = [
 .playfair-font {
   font-family: 'Playfair Display', Georgia, serif;
 }
+
 .letter-spacing-2 {
   letter-spacing: 2px;
 }
+
 .bg-overlay {
   background: rgba(15, 15, 15, 0.75);
 }
+
 .border-gold {
   border: 1px solid #d4af37;
 }
+
 .border-grey {
   border: 1px solid #333333;
 }
+
 .gold-line {
   width: 50px;
   height: 2px;
   background-color: #d4af37;
 }
+
 .border-radius-lg {
   border-radius: 16px;
 }
+
 .border-radius-md {
   border-radius: 12px;
 }
+
 .font-light {
   font-weight: 300;
 }
+
 .font-italic {
   font-style: italic;
 }
+
 .card-gourmet {
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
+
 .card-gourmet:hover {
   transform: translateY(-6px);
   border-color: #d4af37;
-  box-shadow: 0 12px 24px rgba(0,0,0,0.5);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
 }
+
 .uppercase {
   text-transform: uppercase;
   font-size: 0.7rem;
 }
+
 :deep(.modal-img .q-img__image) {
   object-fit: contain !important;
   object-position: center !important;
   background-size: contain !important;
   background-position: center !important;
 }
+
 @media (max-width: 1023px) {
   .border-responsive {
     flex-direction: column;
