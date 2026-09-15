@@ -1,6 +1,5 @@
 <template>
   <q-page class="bg-grey-10 text-grey-2 q-pb-xl">
-    <!-- Header Banner -->
     <div class="banner-container relative-position">
       <q-img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=1000&auto=format&fit=crop"
         height="260px" fit="cover">
@@ -16,7 +15,6 @@
       </q-img>
     </div>
 
-    <!-- Contenedor principal sin padding lateral extenso -->
     <div class="full-width q-px-sm q-mt-xl">
       <!-- Sección Destacado -->
       <div class="q-mb-xl q-mx-auto" style="max-width: 1400px;">
@@ -49,7 +47,6 @@
         </q-card>
       </div>
 
-      <!-- Filtros y Búsqueda -->
       <div class="text-center q-mb-lg q-pt-md">
         <h2 class="text-h5 text-weight-bold text-amber-2 playfair-font q-my-none">NUESTRA CARTA DE BEBIDAS</h2>
         <div class="gold-line q-mx-auto q-mt-xs"></div>
@@ -92,7 +89,9 @@
           </div>
 
           <q-card-section class="card-body q-pa-sm">
-            <div class="text-subtitle1 text-weight-bold text-amber-1 playfair-font q-mb-xs title-clamp">{{ producto.nombre }}</div>
+            <div class="text-subtitle1 text-weight-bold text-amber-1 playfair-font q-mb-xs title-clamp">{{
+              producto.nombre }}
+            </div>
             <div class="text-caption text-grey-4 font-light desc-clamp">{{ producto.descripcion }}</div>
           </q-card-section>
 
@@ -107,7 +106,6 @@
       </div>
     </div>
 
-    <!-- Modal Detalle -->
     <q-dialog v-model="modalDetalle">
       <q-card class="bg-grey-9 text-grey-2 border-gold border-radius-lg overflow-hidden"
         style="width: 500px; max-width: 90vw;">
@@ -406,6 +404,7 @@ const productosFiltrados = computed(() => {
   .products-grid-4 {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .border-responsive {
     flex-direction: column;
   }
