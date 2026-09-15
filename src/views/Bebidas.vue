@@ -202,7 +202,7 @@ const productos = [
     descripcion: "Combinación refrescante de maracuyá, naranja y toronja macerada en agua con gas.",
     precio: "$12.000",
     etiqueta: "Sin Alcohol",
-    imagen: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=500&auto=format&fit=crop",
+    imagen: "https://thumbs.dreamstime.com/b/fizz-de-fruta-la-pasi%C3%B3n-tropical-servida-con-c%C3%ADtricos-frescos-ai-generativo-una-refrescante-bebida-se-presenta-en-un-vaso-lleno-390587915.jpg",
     ingredientes: ["Maracuyá", "Toronja", "Naranja", "Soda"]
   },
   {
