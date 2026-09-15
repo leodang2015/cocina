@@ -1,12 +1,14 @@
 <template>
   <q-page class="bg-grey-10 text-grey-2 q-pb-xl">
     <div class="banner-container relative-position">
-      <q-img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?q=80&w=1200&auto=format&fit=crop" height="260px" fit="cover">
+      <q-img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?q=80&w=1200&auto=format&fit=crop"
+        height="260px" fit="cover">
         <div class="absolute-full flex flex-center bg-overlay">
           <div class="text-center text-amber-2">
             <div class="text-overline letter-spacing-2 text-amber-5">Repostería de Alta Escuela</div>
             <h1 class="text-h3 text-weight-bolder q-my-xs playfair-font">Postres de Autor</h1>
-            <p class="text-subtitle1 text-grey-4 font-italic">Texturas equilibradas, chocolates de origen y el cierre dulce perfecto.</p>
+            <p class="text-subtitle1 text-grey-4 font-italic">Texturas equilibradas, chocolates de origen y el cierre
+              dulce perfecto.</p>
           </div>
         </div>
       </q-img>
@@ -33,7 +35,8 @@
                   <span class="text-caption text-grey-5 block">Servido Tibio</span>
                   <span class="text-h4 text-weight-bolder text-amber-4">{{ chefPostre.precio }}</span>
                 </div>
-                <q-btn color="amber-7" text-color="grey-10" icon="icecream" label="Degustar Postre" class="text-bold q-px-md" unelevated />
+                <q-btn color="amber-7" text-color="grey-10" icon="icecream" label="Degustar Postre"
+                  class="text-bold q-px-md" unelevated />
               </div>
             </q-card-section>
           </div>
@@ -45,7 +48,8 @@
       </div>
       <div class="row q-col-gutter-lg">
         <div v-for="(producto, index) in postres" :key="index" class="col-12 col-sm-6 col-md-4">
-          <q-card class="card-gourmet bg-grey-9 text-grey-2 full-height flex flex-center column justify-between border-grey border-radius-md">
+          <q-card
+            class="card-gourmet bg-grey-9 text-grey-2 full-height flex flex-center column justify-between border-grey border-radius-md">
             <q-img :src="producto.imagen" height="220px" fit="cover">
               <div v-if="producto.etiqueta" class="absolute-top-right bg-transparent q-pa-xs">
                 <q-chip color="amber-9" text-color="grey-1" size="sm" class="text-bold">
@@ -113,43 +117,55 @@ const postres = [
 .playfair-font {
   font-family: 'Playfair Display', Georgia, serif;
 }
+
 .letter-spacing-2 {
   letter-spacing: 2px;
 }
+
 .bg-overlay {
   background: rgba(15, 15, 15, 0.75);
 }
+
 .border-gold {
   border: 1px solid #d4af37;
 }
+
 .border-grey {
   border: 1px solid #333333;
 }
+
 .gold-line {
   width: 50px;
   height: 2px;
   background-color: #d4af37;
 }
+
 .border-radius-lg {
   border-radius: 16px;
 }
+
 .border-radius-md {
   border-radius: 12px;
 }
+
 .font-light {
   font-weight: 300;
 }
+
 .font-italic {
   font-style: italic;
 }
+
 .card-gourmet {
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
+
 .card-gourmet:hover {
   transform: translateY(-6px);
   border-color: #d4af37;
-  box-shadow: 0 12px 24px rgba(0,0,0,0.5);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
 }
+
 @media (max-width: 1023px) {
   .border-responsive {
     flex-direction: column;
