@@ -1,5 +1,6 @@
 <template>
   <q-page class="bg-grey-10 text-grey-2 q-pb-xl">
+    <!-- Banner Principal -->
     <div class="banner-container relative-position">
       <q-img src="https://images.unsplash.com/photo-1619740455993-9e612b1af08a?q=80&w=1000&auto=format&fit=crop"
         height="260px" fit="cover">
@@ -16,6 +17,7 @@
     </div>
 
     <div class="container q-mx-auto q-px-md q-mt-xl" style="max-width: 1100px;">
+      <!-- Sección Destacada / Insignia -->
       <div class="q-mb-xl">
         <div class="text-center q-mb-lg">
           <q-icon name="hot_dog" color="amber-5" size="28px" />
@@ -46,11 +48,13 @@
         </q-card>
       </div>
 
+      <!-- Título de Catálogo -->
       <div class="text-center q-mb-lg q-pt-md">
         <h2 class="text-h5 text-weight-bold text-amber-2 playfair-font q-my-none">NUESTROS PERROS CALIENTES</h2>
         <div class="gold-line q-mx-auto q-mt-xs"></div>
       </div>
 
+      <!-- Filtros y Búsqueda -->
       <div class="q-mb-lg">
         <div class="row items-center q-gutter-sm q-mb-md">
           <q-btn v-for="cat in categoriasFiltro" :key="cat.value" :label="cat.label" :icon="cat.icon"
@@ -72,6 +76,7 @@
         </div>
       </div>
 
+      <!-- Grid de Productos -->
       <div class="row q-col-gutter-lg items-stretch">
         <div v-for="(producto, index) in productosFiltrados" :key="index" class="col-12 col-sm-6 col-md-4 flex">
           <q-card
@@ -103,6 +108,7 @@
       </div>
     </div>
 
+    <!-- Modal Detalle del Producto -->
     <q-dialog v-model="modalDetalle">
       <q-card class="bg-grey-9 text-grey-2 border-gold border-radius-lg overflow-hidden"
         style="width: 500px; max-width: 90vw;">
