@@ -203,7 +203,7 @@ const productos = [
     descripcion: "Salchicha alemana, tocineta crujiente, cebolla frita crocante, queso mozzarella gratinado y salsa BBQ de la casa.",
     precio: "$23.000",
     etiqueta: "Más pedido",
-    imagen: "https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?q=80&w=500&auto=format&fit=crop",
+    imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9I5Vzz_XQDh4P4239Hp556qWhNcHv0SRCuM-dYY6Xe7DkBkiFEDIiMJg&s=10",
     ingredientes: ["Salchicha Alemana", "Cebolla Crocante", "BBQ", "Mozzarella"]
   },
   {
