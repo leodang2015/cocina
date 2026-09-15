@@ -195,7 +195,7 @@ const productos = [
     descripcion: "Carne a la parrilla, queso Jack ahumado, aros de cebolla crocantes, tocineta y salsa BBQ ahumada artesanal.",
     precio: "$28.000",
     etiqueta: "Recomendada",
-    imagen: "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?q=80&w=500&auto=format&fit=crop",
+    imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgCjBXNP0Dgc0_ezyATJnjnxyz8-yN-pQpN5NHxrlAXljjE-ASMOlyXPE&s=10",
     ingredientes: ["Carne Parrillera", "Queso Jack", "Aros de Cebolla", "Salsa BBQ"]
   },
   {
