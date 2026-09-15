@@ -46,11 +46,13 @@
         </q-card>
       </div>
 
+      <!-- Título Catálogo -->
       <div class="text-center q-mb-lg q-pt-md">
         <h2 class="text-h5 text-weight-bold text-amber-2 playfair-font q-my-none">TODOS NUESTROS COMBOS</h2>
         <div class="gold-line q-mx-auto q-mt-xs"></div>
       </div>
 
+      <!-- Cuadrícula de Promociones -->
       <div class="row q-col-gutter-lg items-stretch">
         <div v-for="(producto, index) in promos" :key="index" class="col-12 col-sm-6 col-md-4 flex">
           <q-card
