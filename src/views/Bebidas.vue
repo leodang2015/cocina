@@ -15,7 +15,7 @@
       </q-img>
     </div>
 
-    <div class="container q-mx-auto q-px-md q-mt-xl" style="max-width: 1100px;">
+    <div class="container q-mx-auto q-px-md q-mt-xl" style="max-width: 1200px;">
       <div class="q-mb-xl">
         <div class="text-center q-mb-lg">
           <q-icon name="local_bar" color="amber-5" size="28px" />
@@ -71,34 +71,32 @@
         </div>
       </div>
 
-      <div class="row q-col-gutter-lg items-stretch">
-        <div v-for="(producto, index) in productosFiltrados" :key="index" class="col-12 col-sm-6 col-md-4 flex">
-          <q-card
-            class="card-gourmet bg-grey-9 text-grey-2 full-height full-width border-grey border-radius-md overflow-hidden flex column justify-between">
-            <div>
-              <q-img :src="producto.imagen" height="220px" fit="cover" position="center" class="full-width product-img">
-                <div v-if="producto.etiqueta" class="absolute-top-right bg-transparent q-pa-xs">
-                  <q-chip color="amber-9" text-color="grey-1" size="sm" class="text-bold">
-                    {{ producto.etiqueta }}
-                  </q-chip>
-                </div>
-              </q-img>
-
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 text-weight-bold text-amber-1 playfair-font q-mb-xs">{{ producto.nombre }}</div>
-                <div class="text-body2 text-grey-4 font-light">{{ producto.descripcion }}</div>
-              </q-card-section>
-            </div>
-
-            <q-card-actions class="row items-center justify-between q-px-md q-pb-md q-pt-lg">
-              <div>
-                <div class="text-caption text-grey-5 uppercase">Precio COP</div>
-                <span class="text-h6 text-weight-bold text-amber-4">{{ producto.precio }}</span>
+      <div class="products-grid">
+        <q-card v-for="(producto, index) in productosFiltrados" :key="index"
+          class="card-gourmet bg-grey-9 text-grey-2 border-grey border-radius-md overflow-hidden">
+          <div class="card-media">
+            <q-img :src="producto.imagen" height="200px" fit="cover" class="full-width product-img">
+              <div v-if="producto.etiqueta" class="absolute-top-right bg-transparent q-pa-xs">
+                <q-chip color="amber-9" text-color="grey-1" size="sm" class="text-bold">
+                  {{ producto.etiqueta }}
+                </q-chip>
               </div>
-              <q-btn flat round color="amber-5" icon="visibility" @click="abrirDetalle(producto)" />
-            </q-card-actions>
-          </q-card>
-        </div>
+            </q-img>
+          </div>
+
+          <q-card-section class="card-body">
+            <div class="text-h6 text-weight-bold text-amber-1 playfair-font q-mb-xs title-clamp">{{ producto.nombre }}</div>
+            <div class="text-body2 text-grey-4 font-light desc-clamp">{{ producto.descripcion }}</div>
+          </q-card-section>
+
+          <q-card-actions class="card-footer row items-center justify-between q-px-md q-pb-md q-pt-sm">
+            <div>
+              <div class="text-caption text-grey-5 uppercase">Precio COP</div>
+              <span class="text-h6 text-weight-bold text-amber-4">{{ producto.precio }}</span>
+            </div>
+            <q-btn flat round color="amber-5" icon="visibility" @click="abrirDetalle(producto)" />
+          </q-card-actions>
+        </q-card>
       </div>
     </div>
 
@@ -233,6 +231,44 @@ const productosFiltrados = computed(() => {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,400&display=swap');
 
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.card-gourmet {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.card-gourmet:hover {
+  transform: translateY(-6px);
+  border-color: #d4af37;
+  box-shadow: 0 12px 24px rgba(212, 175, 55, 0.2);
+}
+
+.card-body {
+  flex-grow: 1;
+}
+
+.title-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.desc-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .playfair-font {
   font-family: 'Playfair Display', Georgia, serif;
 }
@@ -275,24 +311,13 @@ const productosFiltrados = computed(() => {
   font-style: italic;
 }
 
-.card-gourmet {
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.card-gourmet:hover {
-  transform: translateY(-6px);
-  border-color: #d4af37;
-  box-shadow: 0 12px 24px rgba(212, 175, 55, 0.2);
-}
-
 .uppercase {
   text-transform: uppercase;
   font-size: 0.7rem;
 }
 
 .product-img {
-  height: 220px !important;
-  max-height: 220px !important;
+  height: 200px !important;
 }
 
 :deep(.product-img .q-img__image) {
@@ -300,7 +325,7 @@ const productosFiltrados = computed(() => {
   background-position: center center !important;
   object-fit: cover !important;
   object-position: center !important;
-  height: 220px !important;
+  height: 200px !important;
 }
 
 :deep(.chef-img .q-img__image) {
