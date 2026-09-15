@@ -1,14 +1,15 @@
 <template>
   <q-page class="bg-grey-10 text-grey-2 q-pb-xl">
     <div class="banner-container relative-position">
-      <q-img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?q=80&w=1200&auto=format&fit=crop"
+      <q-img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?q=80&w=1000&auto=format&fit=crop"
         height="260px" fit="cover">
         <div class="absolute-full flex flex-center bg-overlay">
-          <div class="text-center text-amber-2">
-            <div class="text-overline letter-spacing-2 text-amber-5">Repostería de Alta Escuela</div>
-            <h1 class="text-h3 text-weight-bolder q-my-xs playfair-font">Postres de Autor</h1>
-            <p class="text-subtitle1 text-grey-4 font-italic">Texturas equilibradas, chocolates de origen y el cierre
-              dulce perfecto.</p>
+          <div class="text-center text-amber-2 q-px-md">
+            <div class="text-overline letter-spacing-2 text-amber-5 text-bold">Repostería de Autor</div>
+            <h1 class="text-h3 text-weight-bolder q-my-xs playfair-font">Postres Artesanales</h1>
+            <p class="text-subtitle1 text-grey-4 font-italic" style="max-width: 600px; margin: 0 auto;">
+              El toque dulce perfecto para culminar tu experiencia gastronómica.
+            </p>
           </div>
         </div>
       </q-img>
@@ -18,97 +19,210 @@
       <div class="q-mb-xl">
         <div class="text-center q-mb-lg">
           <q-icon name="cake" color="amber-5" size="28px" />
-          <div class="text-caption text-uppercase letter-spacing-2 text-amber-5 text-bold">Creación Pastetera</div>
-          <h2 class="text-h4 text-weight-bold text-amber-1 q-my-none playfair-font">La Joya Dulce</h2>
+          <div class="text-caption text-uppercase letter-spacing-2 text-amber-5 text-bold">Recomendado del Pastelero
+          </div>
+          <h2 class="text-h4 text-weight-bold text-amber-1 q-my-none playfair-font">Postre Insignia</h2>
+          <div class="gold-line q-mx-auto q-mt-xs"></div>
         </div>
 
         <q-card class="bg-grey-9 text-grey-2 shadow-24 border-gold border-radius-lg overflow-hidden">
-          <div class="row no-wrap border-responsive items-center">
-            <q-img :src="chefPostre.imagen" class="col-12 col-md-6" height="300px" fit="cover" />
+          <div class="row items-center border-responsive">
+            <q-img :src="destacado.imagen" class="col-12 col-md-6 chef-img" height="320px" fit="cover" />
             <q-card-section class="col-12 col-md-6 q-pa-lg">
-              <div class="text-overline text-amber-5 text-bold">Cacao 70% Origen</div>
-              <div class="text-h4 text-weight-bolder text-amber-1 playfair-font q-mb-xs">{{ chefPostre.nombre }}</div>
-              <p class="text-body1 text-grey-4 q-mb-md font-light">{{ chefPostre.descripcion }}</p>
+              <div class="text-overline text-amber-5 text-bold">Obra Maestra</div>
+              <div class="text-h4 text-weight-bolder text-amber-1 playfair-font q-mb-xs">{{ destacado.nombre }}</div>
+              <p class="text-body1 text-grey-4 q-mb-md font-light">{{ destacado.descripcion }}</p>
               <q-separator color="grey-8" class="q-my-md" />
               <div class="row items-center justify-between">
                 <div>
-                  <span class="text-caption text-grey-5 block">Servido Tibio</span>
-                  <span class="text-h4 text-weight-bolder text-amber-4">{{ chefPostre.precio }}</span>
+                  <span class="text-caption text-grey-5 block">Precio</span>
+                  <span class="text-h4 text-weight-bolder text-amber-4">{{ destacado.precio }}</span>
                 </div>
-                <q-btn color="amber-7" text-color="grey-10" icon="icecream" label="Degustar Postre"
-                  class="text-bold q-px-md" unelevated />
+                <div class="row items-center q-gutter-sm">
+                  <q-btn flat round color="amber-5" icon="visibility" @click="abrirDetalle(destacado)" />
+                  <q-btn color="amber-7" text-color="grey-10" icon="shopping_bag" label="Pedir Ahora"
+                    class="text-bold q-px-md" unelevated />
+                </div>
               </div>
             </q-card-section>
           </div>
         </q-card>
       </div>
+
       <div class="text-center q-mb-lg q-pt-md">
-        <h2 class="text-h5 text-weight-bold text-amber-2 playfair-font q-my-none">NUESTRA CARTA DE REPOSTERÍA</h2>
+        <h2 class="text-h5 text-weight-bold text-amber-2 playfair-font q-my-none">NUESTROS POSTRES</h2>
         <div class="gold-line q-mx-auto q-mt-xs"></div>
       </div>
-      <div class="row q-col-gutter-lg">
-        <div v-for="(producto, index) in postres" :key="index" class="col-12 col-sm-6 col-md-4">
+
+      <div class="q-mb-lg">
+        <div class="row items-center q-gutter-sm q-mb-md">
+          <q-btn v-for="cat in categoriasFiltro" :key="cat.value" :label="cat.label" :icon="cat.icon"
+            :unelevated="filtroActivo === cat.value" :flat="filtroActivo !== cat.value"
+            :class="['filter-btn', { 'filter-btn-active': filtroActivo === cat.value }]"
+            @click="filtroActivo = cat.value" no-caps />
+        </div>
+
+        <div class="search-container">
+          <q-input v-model="busqueda" placeholder="Buscar postre..." dense dark outlined class="search-input">
+            <template v-slot:prepend>
+              <q-icon name="search" color="amber-5" />
+            </template>
+            <template v-slot:append v-if="busqueda">
+              <q-icon name="close" class="cursor-pointer" @click="busqueda = ''" />
+            </template>
+          </q-input>
+        </div>
+      </div>
+
+      <div class="row q-col-gutter-lg items-stretch">
+        <div v-for="(producto, index) in productosFiltrados" :key="index" class="col-12 col-sm-6 col-md-4 flex">
           <q-card
-            class="card-gourmet bg-grey-9 text-grey-2 full-height flex flex-center column justify-between border-grey border-radius-md">
-            <q-img :src="producto.imagen" height="220px" fit="cover">
-              <div v-if="producto.etiqueta" class="absolute-top-right bg-transparent q-pa-xs">
-                <q-chip color="amber-9" text-color="grey-1" size="sm" class="text-bold">
-                  {{ producto.etiqueta }}
-                </q-chip>
+            class="card-gourmet bg-grey-9 text-grey-2 full-height full-width border-grey border-radius-md overflow-hidden flex column justify-between">
+            <div>
+              <q-img :src="producto.imagen" height="220px" fit="cover" position="center" class="full-width product-img">
+                <div v-if="producto.etiqueta" class="absolute-top-right bg-transparent q-pa-xs">
+                  <q-chip color="amber-9" text-color="grey-1" size="sm" class="text-bold">
+                    {{ producto.etiqueta }}
+                  </q-chip>
+                </div>
+              </q-img>
+
+              <q-card-section class="q-pb-none">
+                <div class="text-h6 text-weight-bold text-amber-1 playfair-font q-mb-xs">{{ producto.nombre }}</div>
+                <div class="text-body2 text-grey-4 font-light">{{ producto.descripcion }}</div>
+              </q-card-section>
+            </div>
+
+            <q-card-actions class="row items-center justify-between q-px-md q-pb-md q-pt-lg">
+              <div>
+                <div class="text-caption text-grey-5 uppercase">Precio COP</div>
+                <span class="text-h6 text-weight-bold text-amber-4">{{ producto.precio }}</span>
               </div>
-            </q-img>
-            <q-card-section class="full-width q-pb-none">
-              <div class="text-h6 text-weight-bold text-amber-1 playfair-font q-mb-xs">{{ producto.nombre }}</div>
-              <div class="text-body2 text-grey-4 font-light">{{ producto.descripcion }}</div>
-            </q-card-section>
-            <q-card-actions class="full-width row items-center justify-between q-px-md q-pb-md q-pt-lg">
-              <span class="text-h6 text-weight-bolder text-amber-4">{{ producto.precio }}</span>
+              <q-btn flat round color="amber-5" icon="visibility" @click="abrirDetalle(producto)" />
             </q-card-actions>
           </q-card>
         </div>
       </div>
     </div>
+
+    <q-dialog v-model="modalDetalle">
+      <q-card class="bg-grey-9 text-grey-2 border-gold border-radius-lg overflow-hidden"
+        style="width: 500px; max-width: 90vw;">
+        <div class="relative-position bg-black">
+          <q-img :src="productoSeleccionado.imagen" height="260px" fit="contain" class="full-width modal-img">
+            <div v-if="productoSeleccionado.etiqueta" class="absolute-top-left bg-transparent q-pa-xs">
+              <q-chip color="amber-9" text-color="grey-1" size="sm" class="text-bold">
+                ★ {{ productoSeleccionado.etiqueta }}
+              </q-chip>
+            </div>
+          </q-img>
+          <q-btn icon="close" flat round dense v-close-popup color="white" class="absolute-top-right q-ma-xs"
+            style="background: rgba(0,0,0,0.6);" />
+        </div>
+
+        <q-card-section class="q-pt-md">
+          <div class="row items-center justify-between q-mb-xs">
+            <div class="text-h5 text-weight-bold text-amber-1 playfair-font">{{ productoSeleccionado.nombre }}</div>
+            <div class="text-h5 text-weight-bolder text-amber-4">{{ productoSeleccionado.precio }}</div>
+          </div>
+
+          <p class="text-body2 text-grey-4 font-light q-mb-md">{{ productoSeleccionado.descripcion }}</p>
+
+          <div v-if="productoSeleccionado.ingredientes && productoSeleccionado.ingredientes.length" class="q-mb-md">
+            <div class="text-subtitle2 text-amber-2 text-bold q-mb-xs">
+              <q-icon name="stars" class="q-mr-xs" /> Ingredientes:
+            </div>
+            <div class="row q-gutter-xs">
+              <q-chip v-for="(item, idx) in productoSeleccionado.ingredientes" :key="idx" outline color="amber-5"
+                text-color="grey-2" size="sm" icon="check">
+                {{ item }}
+              </q-chip>
+            </div>
+          </div>
+
+          <div class="q-mt-md">
+            <q-input v-model="instruccionesEspeciales" outlined dense dark color="amber-5"
+              label="Notas para el pedido (p. ej. adición de helado)" />
+          </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
 <script setup>
-const chefPostre = {
-  nombre: "Coulant de Chocolate & Fleur de Sel",
-  descripcion: "Volcán de chocolate negro ecuatoriano 70% de cacao con corazón fluido, acompañado de quenelle de helado de vainilla Bourbon de Madagascar y escamas de sal marina.",
-  precio: "$20.000",
-  imagen: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=600&auto=format&fit=crop"
+import { ref, computed } from 'vue'
+
+const modalDetalle = ref(false)
+const productoSeleccionado = ref({})
+const instruccionesEspeciales = ref('')
+
+const filtroActivo = ref('todos')
+const busqueda = ref('')
+
+const categoriasFiltro = [
+  { label: 'TODOS', value: 'todos', icon: 'cake' },
+  { label: 'MÁS PEDIDOS', value: 'Más pedido', icon: 'local_fire_department' },
+  { label: 'CHOCOLATE', value: 'Chocolate', icon: 'cookie' },
+  { label: 'TRADICIONALES', value: 'Tradicional', icon: 'star' }
+]
+
+const abrirDetalle = (producto) => {
+  productoSeleccionado.value = producto
+  instruccionesEspeciales.value = ''
+  modalDetalle.value = true
 }
 
-const postres = [
+const destacado = {
+  nombre: "Volcán de Chocolate Belga",
+  descripcion: "Bizcocho tibio de chocolate 70% cacao con centro líquido cremoso, acompañado de una bola de helado artesanal de vainilla Bourbon.",
+  precio: "$18.000",
+  imagen: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=600&auto=format&fit=crop",
+  ingredientes: ["Chocolate Belga 70%", "Helado Vainilla Bourbon", "Cacao en polvo"]
+}
+
+const productos = [
   {
-    nombre: "Cheesecake de Frutos Rojos y Cardamomo",
-    descripcion: "Cremoso de queso estilo neoyorquino sobre sablée de almendras, compota de frambuesa fresca y perfume de cardamomo.",
-    precio: "$16.500",
-    etiqueta: "Fav del Chef",
-    imagen: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?q=80&w=500&auto=format&fit=crop"
+    nombre: "Tiramisú Clásico Italiano",
+    descripcion: "Capas de bizcocho Soletilla impregnadas en café espresso y licor de Amaretto, crema de queso Mascarpone y cacao amargo.",
+    precio: "$16.000",
+    etiqueta: "Más pedido",
+    imagen: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?q=80&w=500&auto=format&fit=crop",
+    ingredientes: ["Queso Mascarpone", "Café Espresso", "Amaretto", "Soletillas"]
   },
   {
-    nombre: "Tiramisú Tradicional al Marsala",
-    descripcion: "Bizcochos Savoiardi embebidos en espresso Illy y licor Marsala, intercalados con mousse fina de mascarpone y cacao en polvo.",
+    nombre: "Cheesecake de Frutos Rojos",
+    descripcion: "Cremoso pastel de queso estilo New York sobre galleta crujiente de mantequilla, cubierto con coulis artesanal de moras y fresas.",
     precio: "$17.000",
-    etiqueta: "Receta Italiana",
-    imagen: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?q=80&w=500&auto=format&fit=crop"
+    etiqueta: "Tradicional",
+    imagen: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?q=80&w=500&auto=format&fit=crop",
+    ingredientes: ["Queso Crema", "Coulis de Frutos Rojos", "Base de Galleta"]
   },
   {
-    nombre: "Tarta Tatin de Manzana",
-    descripcion: "Manzanas caramelizadas en mantequilla de Normandía, horneadas invertidas sobre hojaldre crujiente con helado de canela.",
+    nombre: "Brownie Melcochudo con Helado",
+    descripcion: "Brownie con nueces tostadas servido tibio con helado de vainilla, bañado en salsa de caramelo salado casero.",
     precio: "$15.000",
-    etiqueta: "Clásico Francés",
-    imagen: "https://images.unsplash.com/photo-1568571780765-9276ac8b75a2?q=80&w=500&auto=format&fit=crop"
-  },
-  {
-    nombre: "Panna Cotta de Vainilla & Mango",
-    descripcion: "Postre cremoso piamontés a base de crema de leche fresca, vainilla natural en vaina y coulis de mango de azúcar.",
-    precio: "$14.000",
-    etiqueta: "Textura Suave",
-    imagen: "https://images.unsplash.com/photo-1528975604071-b4dc52a2d18c?q=80&w=500&auto=format&fit=crop"
+    etiqueta: "Chocolate",
+    imagen: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=500&auto=format&fit=crop",
+    ingredientes: ["Brownie Cacao", "Nueces", "Caramelo Salado", "Helado"]
   }
 ]
+
+const productosFiltrados = computed(() => {
+  return productos.filter(prod => {
+    const texto = busqueda.value.toLowerCase().trim()
+    const coincideTexto = !texto ||
+      prod.nombre.toLowerCase().includes(texto) ||
+      prod.descripcion.toLowerCase().includes(texto)
+
+    let coincideFiltro = true
+    if (filtroActivo.value !== 'todos') {
+      coincideFiltro = prod.etiqueta === filtroActivo.value
+    }
+
+    return coincideTexto && coincideFiltro
+  })
+})
 </script>
 
 <style scoped>
@@ -163,7 +277,87 @@ const postres = [
 .card-gourmet:hover {
   transform: translateY(-6px);
   border-color: #d4af37;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 12px 24px rgba(212, 175, 55, 0.2);
+}
+
+.uppercase {
+  text-transform: uppercase;
+  font-size: 0.7rem;
+}
+
+.product-img {
+  height: 220px !important;
+  max-height: 220px !important;
+}
+
+:deep(.product-img .q-img__image) {
+  background-size: cover !important;
+  background-position: center center !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  height: 220px !important;
+}
+
+:deep(.chef-img .q-img__image) {
+  background-size: cover !important;
+  background-position: center center !important;
+  object-fit: cover !important;
+}
+
+:deep(.modal-img .q-img__image) {
+  object-fit: contain !important;
+  object-position: center !important;
+  background-size: contain !important;
+  background-position: center !important;
+}
+
+.filter-btn {
+  color: #ffffff !important;
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.5px;
+  border-radius: 20px;
+  padding: 4px 16px;
+  transition: all 0.2s ease-in-out;
+}
+
+.filter-btn:hover {
+  background: rgba(255, 193, 7, 0.15) !important;
+  color: #ffc107 !important;
+}
+
+.filter-btn-active {
+  background-color: #ffc107 !important;
+  color: #121212 !important;
+  border-radius: 20px;
+}
+
+.search-container {
+  max-width: 380px;
+}
+
+.search-input :deep(.q-field__inner) {
+  border-radius: 6px;
+}
+
+.search-input :deep(.q-field__control) {
+  background-color: #2b2b2b !important;
+  border-radius: 6px;
+  border: 1px solid #4f4f4f;
+}
+
+.search-input :deep(.q-field__control:before),
+.search-input :deep(.q-field__control:after) {
+  display: none;
+}
+
+.search-input :deep(input) {
+  color: #e0e0e0 !important;
+  font-size: 0.9rem;
+}
+
+.search-input :deep(input::placeholder) {
+  color: #9e9e9e !important;
 }
 
 @media (max-width: 1023px) {
