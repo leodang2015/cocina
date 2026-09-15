@@ -39,8 +39,6 @@
                 </div>
                 <div class="row items-center q-gutter-sm">
                   <q-btn flat round color="amber-5" icon="visibility" @click="abrirDetalle(chefPromo)" />
-                  <q-btn color="amber-7" text-color="grey-10" icon="shopping_bag" label="Pedir Combo"
-                    class="text-bold q-px-md" unelevated />
                 </div>
               </div>
             </q-card-section>
@@ -48,7 +46,6 @@
         </q-card>
       </div>
 
-      <!-- Título Catálogo -->
       <div class="text-center q-mb-lg q-pt-md">
         <h2 class="text-h5 text-weight-bold text-amber-2 playfair-font q-my-none">TODOS NUESTROS COMBOS</h2>
         <div class="gold-line q-mx-auto q-mt-xs"></div>
@@ -86,7 +83,6 @@
       </div>
     </div>
 
-    <!-- Modal Detalle del Producto -->
     <q-dialog v-model="modalDetalle">
       <q-card class="bg-grey-9 text-grey-2 border-gold border-radius-lg overflow-hidden"
         style="width: 500px; max-width: 90vw;">
