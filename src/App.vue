@@ -10,11 +10,14 @@
         </q-toolbar-title>
         <div class="gt-sm row items-center q-gutter-sm">
           <q-btn flat no-caps label="Inicio" to="/" class="nav-link text-bold" active-class="nav-active" />
-          <q-btn flat no-caps label="Hamburguesas" to="/hamburguesas" class="nav-link text-bold" active-class="nav-active" />
+          <q-btn flat no-caps label="Hamburguesas" to="/hamburguesas" class="nav-link text-bold"
+            active-class="nav-active" />
           <q-btn flat no-caps label="Pizzas" to="/pizzas" class="nav-link text-bold" active-class="nav-active" />
           <q-btn flat no-caps label="Perros" to="/perros" class="nav-link text-bold" active-class="nav-active" />
           <q-btn flat no-caps label="Bebidas" to="/bebidas" class="nav-link text-bold" active-class="nav-active" />
           <q-btn flat no-caps label="Postres" to="/postres" class="nav-link text-bold" active-class="nav-active" />
+          <q-btn flat no-caps label="Promociones" to="/promociones" class="nav-link text-bold"
+            active-class="nav-active" />
           <q-btn flat no-caps label="Nosotros" to="/nosotros" class="nav-link text-bold" active-class="nav-active" />
         </div>
         <q-btn flat round icon="menu" color="amber-5" class="lt-md" @click="drawer = !drawer" />
@@ -52,6 +55,10 @@
             <q-item-section avatar><q-icon name="cake" color="amber-5" /></q-item-section>
             <q-item-section>Postres</q-item-section>
           </q-item>
+          <q-item clickable v-ripple to="/promociones" active-class="text-amber-4 text-bold">
+            <q-item-section avatar><q-icon name="local_offer" color="amber-5" /></q-item-section>
+            <q-item-section>Promociones</q-item-section>
+          </q-item>
           <q-item clickable v-ripple to="/nosotros" active-class="text-amber-4 text-bold">
             <q-item-section avatar><q-icon name="info" color="amber-5" /></q-item-section>
             <q-item-section>Nosotros</q-item-section>
@@ -62,7 +69,8 @@
     <q-page-container>
       <div v-if="$route.path === '/'" class="folleto-welcome q-pb-xl">
         <div class="folleto-hero relative-position flex flex-center">
-          <q-img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop" height="420px" fit="cover">
+          <q-img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop"
+            height="420px" fit="cover">
             <div class="absolute-full bg-overlay flex flex-center">
               <div class="text-center text-amber-2 q-px-md folleto-frame">
                 <div class="text-overline letter-spacing-2 text-amber-5 text-bold">BIENVENIDO A NUESTRA MESA</div>
@@ -71,7 +79,8 @@
                   "Una experiencia donde la comida rápida de autor se encuentra con el rigor de la alta gastronomía."
                 </p>
                 <div class="q-mt-lg row justify-center q-gutter-md">
-                  <q-btn color="amber-7" text-color="grey-10" label="Ver Hamburguesas" to="/hamburguesas" class="text-bold q-px-lg" unelevated />
+                  <q-btn color="amber-7" text-color="grey-10" label="Ver Hamburguesas" to="/hamburguesas"
+                    class="text-bold q-px-lg" unelevated />
                   <q-btn outline color="amber-5" label="Conocer Historias" to="/nosotros" class="q-px-lg" />
                 </div>
               </div>
@@ -80,7 +89,8 @@
         </div>
         <div class="container q-mx-auto q-px-md q-mt-xl" style="max-width: 1100px;">
           <div class="text-center q-mb-xl">
-            <span class="text-caption text-amber-5 text-bold letter-spacing-2 text-uppercase">Carta de Presentación</span>
+            <span class="text-caption text-amber-5 text-bold letter-spacing-2 text-uppercase">Carta de
+              Presentación</span>
             <h2 class="text-h4 text-weight-bold text-amber-1 playfair-font q-my-xs">Nuestras Especialidades</h2>
             <div class="gold-line q-mx-auto q-mt-xs"></div>
           </div>
@@ -94,7 +104,8 @@
                   </q-avatar>
                   <div class="text-h6 playfair-font text-amber-2 text-bold">Hamburguesas Wagyu</div>
                   <p class="text-body2 text-grey-4 font-light q-mt-sm">
-                    Carnes con maduración controlada, queso Gruyère artesanal y panes brioche braseados en mantequilla de trufa.
+                    Carnes con maduración controlada, queso Gruyère artesanal y panes brioche braseados en mantequilla
+                    de trufa.
                   </p>
                 </q-card-section>
                 <q-card-actions align="center">
@@ -110,7 +121,8 @@
                   </q-avatar>
                   <div class="text-h6 playfair-font text-amber-2 text-bold">Pizzas Napolitanas</div>
                   <p class="text-body2 text-grey-4 font-light q-mt-sm">
-                    Masa madre fermentada durante 48 horas, fermentación natural y horneadas a la piedra a altas temperaturas.
+                    Masa madre fermentada durante 48 horas, fermentación natural y horneadas a la piedra a altas
+                    temperaturas.
                   </p>
                 </q-card-section>
                 <q-card-actions align="center">
@@ -126,7 +138,8 @@
                   </q-avatar>
                   <div class="text-h6 playfair-font text-amber-2 text-bold">Elixires & Coctelería</div>
                   <p class="text-body2 text-grey-4 font-light q-mt-sm">
-                    Bebidas botánicas artesanales, refrescos infusionados y maridajes diseñados exclusivamente para nuestra carta.
+                    Bebidas botánicas artesanales, refrescos infusionados y maridajes diseñados exclusivamente para
+                    nuestra carta.
                   </p>
                 </q-card-section>
                 <q-card-actions align="center">
@@ -179,6 +192,7 @@ body {
   font-family: 'Roboto', sans-serif;
   background-color: #121212;
 }
+
 .card-gourmet .q-img,
 .card-folleto .q-img {
   height: 280px !important;
@@ -194,5 +208,6 @@ body {
 
 .items-stretch {
   display: flex;
-  align-items: stretch;}
+  align-items: stretch;
+}
 </style>
