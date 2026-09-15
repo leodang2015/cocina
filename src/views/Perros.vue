@@ -211,7 +211,7 @@ const productos = [
     descripcion: "Salchicha marianera en pan caliente de mantequilla, papa ripia, queso derretido y salsas tradicionales a elección.",
     precio: "$15.000",
     etiqueta: "Tradicional",
-    imagen: "https://images.unsplash.com/photo-1619740455993-9e612b1af08a?q=80&w=500&auto=format&fit=crop",
+    imagen: "https://qr.food724.com/demo/wp-content/uploads/sites/3/2024/11/perro-papas-1.webp",
     ingredientes: ["Salchicha Marianera", "Pan de Mantequilla", "Papa Ripia"]
   }
 ]
