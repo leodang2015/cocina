@@ -191,7 +191,7 @@ const productos = ref([
     precio: "$65.000",
     categoria: "MAS_PEDIDAS",
     etiqueta: "MÁS PEDIDA",
-    imagen: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1000&auto=format&fit=crop",
+    imagen: "https://lens.usercontent.google.com/banana?agsi=CmdnbG9iYWw6OjAwMDA1NWNmZWM3MDAyNmQ6MDAwMDAwZWI6MTo1MmNhYjQyNTM0YWE1ZjhlOjAwMDA1NWNmZWM3MDAyNmQ6MDAwMDAzNjViZTAwMzM2ODowMDA2NWI3YzA4N2JiYTFmEAIYASIKaW1hZ2UvanBlZw==",
     ingredientes: ["Carne de res", "Salchicha premium", "Queso mozzarella", "Masa artesanal"],
     incluye: ["2 Hamburguesas", "2 Perros", "1 Pizza Mediana", "Gaseosa 1.5L"]
   },
