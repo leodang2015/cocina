@@ -39,7 +39,6 @@
                 </div>
                 <div class="row items-center q-gutter-sm">
                   <q-btn flat round color="amber-5" icon="visibility" @click="abrirDetalle(destacado)" />
-                    class="text-bold q-px-md" unelevated />
                 </div>
               </div>
             </q-card-section>
